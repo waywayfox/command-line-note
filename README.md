@@ -4,6 +4,8 @@
 
 ## git commit
 
+`git commit --amend`
+更改上一次的commit。
 
 ## git log
 
@@ -56,6 +58,34 @@
 
 `git branch` 查看所有的分支跟目前所在的分支
 
+## git rm
+
+`git rm --cached <filename>`
+把staged的檔案從stage的階段刪掉，還會保留檔案。
+
+## git clean
+
+`git clean` 
+清除目前所有untracked的檔案，並不會刪除untracked的資料夾。
+
+`git clean -d`
+清除目前所有untracked的檔案跟資料夾。
+
+在進行清除時，一定要配合下面3個其中一個進行。
+
+git clean -f` 
+強制清除。
+
+`git clean -n`
+並不會真的清除，而是列出執行動作後會清除哪些檔案。
+
+`git clean -i`
+使用Interactive mode進行刪除。
+
+##git diff
+
+`git diff <branch>`
+查看目前的HEAD 跟<branch>之前的差異。
 
 ## git config
 
