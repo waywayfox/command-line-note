@@ -43,6 +43,12 @@
 `git merge --squash <branch>`
 使用squash的方式合併，合併所有branch上的commit，疊加在目前所在的分支上，產生像是合併完的結果，但並不會產生新的commit，需要自己手動產生新的commit，
 
+
+## git push
+
+`git push origin :<branch>`
+使用空的分支替代remote端的分支，等同於刪掉remote上的branch。
+
 ## git remote
 `git remote -v` 查看目前remote端的路徑
 
@@ -73,7 +79,7 @@
 
 在進行清除時，一定要配合下面3個其中一個進行。
 
-git clean -f` 
+`git clean -f` 
 強制清除。
 
 `git clean -n`
@@ -82,7 +88,7 @@ git clean -f`
 `git clean -i`
 使用Interactive mode進行刪除。
 
-##git diff
+## git diff
 
 `git diff <branch>`
 查看目前的HEAD 跟<branch>之前的差異。
