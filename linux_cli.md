@@ -32,4 +32,11 @@
 `find <paht>  -type d -name aaa`
 在路徑下尋找所有aaa的資料夾
 
+`find <path> -user <user name> -exec rm -fr {} \;`
+刪除路徑下所有使用者是<user name>的檔案跟資料夾
 
+## df
+查看硬碟使用量
+
+## awk
+文本處理

@@ -9,6 +9,8 @@
 
 ## git log
 
+`git log [<options>] [<revision range>] [[--] <path>…​]`
+
 `git log`
 一般顯示近期的commit，
 
@@ -23,9 +25,12 @@
 
 `git log --name-status` 顯示新增、更動、刪除的檔案列表。
 
+`git log --follow <file name/directory name>`
+顯示除了改名之外有更改過這個檔案的commit。
 
 
-## git pull
+
+#
 
 `git pull`
 這條指令是結合了`git fetch`以及`git merge`兩者，將remote端的版本下載到本地端，並合成，
@@ -59,6 +64,9 @@
     git pull #取得最新的版本
     git checkout <local branch> #切回自己的分支
     git rebase <remote branch> #將自己目前分支修改的部分疊加在要疊加的分支上
+
+回復單一檔案或資料夾到之前的版本
+git checkout HEAD -- <path/of/file>
 
 ## git branch
 
@@ -94,4 +102,26 @@
 查看目前的HEAD 跟<branch>之前的差異。
 
 ## git config
+
+
+## git submodule
+
+`git submodule foreach --recursive git pull <remote> <branch>`
+把目前所有引用的submodule都更新到最新版本
+
+## git stash
+
+`git stash`
+將現在改動的檔案修改儲存起來
+
+`git stash apply`
+將最近儲存的修改附加上去。
+
+`git stash clear`
+刪除所有儲存的修改
+
+
+
+
+
 
