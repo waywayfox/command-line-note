@@ -57,6 +57,9 @@
 ## git remote
 `git remote -v` 查看目前remote端的路徑
 
+`git remote set-url origin <remote>`
+若是你remote的repository有改名稱，或是你存放的遠端路徑有改變，使用這一條更改。
+
 ## git checkout
 讓自己本地端的修改 疊在遠端的版本
 
