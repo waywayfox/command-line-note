@@ -28,9 +28,13 @@
 `git log --follow <file name/directory name>`
 顯示除了改名之外有更改過這個檔案的commit。
 
+## git rebase
+
+`git rebase -i <sha1>`
+對現在到目標commit之間的commit進行挑選和位置排列
 
 
-#
+## git pull
 
 `git pull`
 這條指令是結合了`git fetch`以及`git merge`兩者，將remote端的版本下載到本地端，並合成，
