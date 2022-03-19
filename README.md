@@ -28,6 +28,10 @@
 `git log --follow <file name/directory name>`
 顯示除了改名之外有更改過這個檔案的commit。
 
+`git log -L start,end:file`
+用來找出檔案中特定名稱的function的commit
+例如：git log -L :myfunction:path/to/myfile.c
+
 ## git rebase
 
 `git rebase -i <sha1>`
@@ -110,7 +114,6 @@ git checkout HEAD -- <path/of/file>
 
 ## git config
 
-
 ## git submodule
 
 `git submodule foreach --recursive git pull <remote> <branch>`
@@ -126,9 +129,3 @@ git checkout HEAD -- <path/of/file>
 
 `git stash clear`
 刪除所有儲存的修改
-
-
-
-
-
-
