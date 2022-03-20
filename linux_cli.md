@@ -40,3 +40,12 @@
 
 ## awk
 文本處理
+
+
+## VM shared folder
+`sudo apt install virtualbox-gues-utils`
+`sudo adduser [username] vboxsf`
+`reboot`
+
+
+
