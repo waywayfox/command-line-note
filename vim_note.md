@@ -38,7 +38,8 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 <leader> 預設是`\`，可以讓你更好擴充你的mapping，假如你想要使用的鍵已經被用掉，你可以在前面加個<leader>來使用它。
 `map <leader>i >>`像是這樣，因為i已經有人用過了。
 `:let mapleader = ","` 你可以這樣更換你的leader key
-
+``<mode>unmap <key>`` 可以解除mapping
+`<mode>mapclear` 解除這個模式的所有mapping
 
 ## nerdtree
 `:NERDTreeToggle` 切換進入nerdtree的window
