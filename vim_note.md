@@ -62,9 +62,10 @@ TODO: silver-searcher
 `cs` 後面加你要改動的跟你要變成的
 
 
-
-
-
+## bookmark
+use `m[a-z]` to set the bookmark.
+use ```[a-z]`` to move to bookmark.
+use `:marks` to check the bookmarks you save.
 
 
 

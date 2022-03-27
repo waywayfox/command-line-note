@@ -10,7 +10,7 @@ echo 跟 echom 都會印出東西，不過echo會直接消失，若是你想印�
  ## Setting Options
 Vim 裡面有兩種options,一種是boolean option(只會有on/off)，另一種則接受值。
 所有boolean option都是同樣的設定方法，`:set <name>`跟`:set no<name>`
-
+你可以用`:set number!`來toggle options，或用`:set number?`來查詢option的狀態。
 
 
 
