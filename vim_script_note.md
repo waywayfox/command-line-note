@@ -1,5 +1,4 @@
 # Learn Vimscript the Hard Way
-
 # Echoing Messages
 echo 跟 echom 都會印出東西，不過echo會直接消失，若是你想印出點東西來debug的話，echom會是比較好的選擇，因為你的script會越來越大
 你可以用`:messages` 來檢查印出來的東西。
@@ -13,7 +12,43 @@ Vim 裡面有兩種options,一種是boolean option(只會有on/off)，另一種�
 你可以用`:set number!`來toggle options，或用`:set number?`來查詢option的狀態。
 
 
-## abbreviation
-Vim 裡面可以定義縮寫
-`iabbrev an`
+## abbreviations
+Vim裡面，你可以定義縮寫，它有點像keymapping, 但只用在insert, replace跟cmd mode。
+你可以用來處理錯字或是一些常用的輸入。
+`iabbrev adn and`
+`iab ms Microsoft`
+`:iabbrev @@    steve@stevelosh.com`
+當你在insert mode時，當你輸入任何非keyword的字元，它就會檢查並替換。
+`:set iskeyword?` 你可以用這個來查詢keyword是哪些。
+
+
+## autocmd
+`:autocmd <event> <pattern> <command>`
+你可以使用autocmd對各個FileType的文件進行特別的處理，結合mapping跟abbrev，創造自己的snippet跟快捷鍵。
+當你建立不同的autocmd時，就算你指定同樣的事件，它也並不會覆蓋掉之前的。
+需要注意的是，當你`source ~/.vimrc`的時候，它其實是重新讀了一次那些autocmd，會讓你重複定義這些autocmd，太多次甚至可能讓vim變慢。
+為了解決這個問題，你可以把autocmd集結成augroup
+
+## Operator-Pending Mapping
+除了一般的mapping之外，你還可以定義自己想要的範圍。
+`:onoremap p i(` 這代表說你把p這個範圍重新定成inner ()。
+`onoeremap b /return<cr>` 這個則是把b換成現在到return前的東西。
+`onoremap in( :<c-u>normal! f(vi(<cr>` 你也可以這樣來獲取範圍，<c-u>是刪除目前輸入的command，因為當他在選取時，其實會進入visual mode，所以先把選取範圍全刪掉，在用normal!執行選取的指令。
+在設立mapping時，記住他有兩種規則，它最後進行動作的範圍，是(1)visual mode選則的範圍，跟(2)初始位置跟新位置中間的所有文字。
+要注意normal! 沒辦法辨認出特殊字元，像是`<cr>`。有幾個可以繞過這個問題的方法，其中一個就是使用`execute`
+所以下面這一行指令，會先把\r換成enter，而不是單純的看成4個字元。使用`:h pattern-overview`來查訊更多轉換。
+`:onoremap ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>`
+
+
+## status line
+status line是顯示在最下面的那個狀態欄，你可以自己定義它。
+`:set statusline=%f\ -\ FileType:\ %y` 它會把對應的資料放進你想要的地方並顯示出來。
+不過更好編寫的方式是分成數行來寫，比較好管理。
+```
+:set statusline=%f
+:set statusline+=\ -\
+:set statusline+=FileType:
+:set statusline+=%y
+```
+`%=`可以讓你換到右邊。
 
