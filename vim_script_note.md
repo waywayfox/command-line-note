@@ -52,3 +52,52 @@ status line是顯示在最下面的那個狀態欄，你可以自己定義它。
 ```
 `%=`可以讓你換到右邊。
 
+## variable
+你可以使用let來設定變數，也可以用這個方法來抓到設定的option跟register。
+在使用option時要在前面加上`&`，若是你想要的是local option，則是使用`&l:`。
+`let &number = 1`
+`let &l:number = 1`
+使用register時是用`@`
+`:let @a = "asuka!"`
+另外你要搜尋的字串存在`@/`裡面。
+如果你要定義local的變數，則需要在前面加上`b:`,
+代表給只給這個buffer用，去查internal-variables找更多其他可用的前綴。
+`:let b:hello = "world"`
+
+
+## conditions
+```
+if <>
+
+elseif <>
+
+else
+
+endif
+```
+要注意，==的行為跟你的設定是有關的，假如你設定`:set ignorecase`那它就會無視大小寫。
+永遠不要相信使用者的設定，你該使用`==?`無視大小寫跟`==#`分辨大小寫來進判斷。
+雖然在比較數字時沒差，不過你該永遠使用`==#`來做判斷。
+`:h expr4`查詢更多比較符號。
+
+
+## functions
+function的名稱一定要大寫開頭。
+`:call Meow()`你可以這樣呼叫你寫的function。
+
+```
+function GetAsuka()
+  echom "asuka1"
+  return "asuka"
+endfunction
+```
+假如你沒有指定它回傳什麼，它就會回傳0。
+
+
+
+
+
+
+
+
+
