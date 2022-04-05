@@ -92,8 +92,47 @@ function GetAsuka()
 endfunction
 ```
 假如你沒有指定它回傳什麼，它就會回傳0。
+假如你要複寫已經存在的function，使用`:function! <functionName>()`。
+要取得你傳進來的參數，永遠要在前面加上`a:`才行。
+你也可以用下面的方式抓取你要的參數
+```
+:function Varg(...)
+:  echom a:0 " 2
+:  echom a:1 " asuka
+:  echo a:000 ["asuka", "fuuka"]
+:endfunction
+
+:call Varg("asuka", "fuuka")
+```
+不過這些只能用在...上面
+```
+:function Varg2(foo, ...)
+:  echom a:foo " asuka
+:  echom a:0   " 2
+:  echom a:1   " fuuka
+:  echo a:000  " ["fuuka", "fina"]
+:endfunction
+
+:call Varg2("asuka", "fuuka", "fina")
+```
+你沒辦法直接修改傳進來的參數，不過你可以這樣做
+```
+:function AssignGood(foo)
+:  let l:foo_tmp = a:foo
+:  let l:foo_tmp = "Yep"
+:  echom l:foo_tmp
+:endfunction
+
+:call AssignGood("test")
+```
 
 
+## String
+注意在你使用
+`echo`跟`echom`時，特殊符號會有時會有不同的顯示方式，例如`\n`。
+你可以使用單引號，來印出確切你打了什麼，打兩個單引號在裡面表示一個單引號。
+`echo 'that''s right'`
+`:h expr-quote`查詢更多特殊符號。
 
 
 
