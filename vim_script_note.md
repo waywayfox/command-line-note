@@ -10,6 +10,7 @@ echo 跟 echom 都會印出東西，不過echo會直接消失，若是你想印�
 Vim 裡面有兩種options,一種是boolean option(只會有on/off)，另一種則接受值。
 所有boolean option都是同樣的設定方法，`:set <name>`跟`:set no<name>`
 你可以用`:set number!`來toggle options，或用`:set number?`來查詢option的狀態。
+`:setlocal` 可以讓你只針對當前的buffer進行設定，不過若這個options只有globla，就依然會對所有buffer起作用。
 
 
 ## abbreviations
@@ -164,6 +165,15 @@ CTRL-G u	break undo sequence, start new change	     *i_CTRL-G_u*
 
 ## Regular expression
 查詢`:h magic`跟`:h pattern-overview`來知道更多。
+
+
+
+
+
+
+
+
+
 
 
 

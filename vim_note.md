@@ -40,6 +40,8 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 `:let mapleader = ","` 你可以這樣更換你的leader key
 ``<mode>unmap <key>`` 可以解除mapping
 `<mode>mapclear` 解除這個模式的所有mapping
+`<nop>` 你可以把key mapping到這個東西上，他什麼都不做。
+`nnoremap <buffer> <leader>x dd` 在前面加上<buffer>可以讓這個mapping只存在當前buffer, 不過當你這樣做時，使用<localleader>會比較好。
 
 ## nerdtree
 `:NERDTreeToggle` 切換進入nerdtree的window
@@ -65,7 +67,5 @@ TODO: silver-searcher
 use `m[a-z]` to set the bookmark.
 use ```[a-z]`` to move to bookmark.
 use `:marks` to check the bookmarks you save.
-
-
 
 
