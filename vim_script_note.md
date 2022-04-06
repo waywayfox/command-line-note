@@ -133,10 +133,15 @@ endfunction
 你可以使用單引號，來印出確切你打了什麼，打兩個單引號在裡面表示一個單引號。
 `echo 'that''s right'`
 `:h expr-quote`查詢更多特殊符號。
+你可以用在insert mode使用i_CTRL_V，這可以讓你直接輸入你下一個打的特殊字元。
 
 
 
-
+## normal
+normal會連map一起算進去，如果你不想要你打的東西被map的話，要加上!才行。
+你該永遠使用`normal!`。
+在使用normal時，如果你要undo你的指令，它會一次全部undo，你可以用下面這東西來避免，如果你需要的話。
+CTRL-G u	break undo sequence, start new change	     *i_CTRL-G_u*
 
 
 
