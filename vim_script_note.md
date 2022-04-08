@@ -137,11 +137,35 @@ endfunction
 
 
 
-## normal
+## normal execute
 normal會連map一起算進去，如果你不想要你打的東西被map的話，要加上!才行。
 你該永遠使用`normal!`。
 在使用normal時，如果你要undo你的指令，它會一次全部undo，你可以用下面這東西來避免，如果你需要的話。
 CTRL-G u	break undo sequence, start new change	     *i_CTRL-G_u*
+
+你可以結合execute搭配normal，因為normal並不會認出特殊字元，execute則會，至於特殊字元你可以`:h expr-quote`，
+下面作法可以讓你打出一些特出字元組合。
+\<xxx>	Special key named "xxx".  e.g. "\<C-W>" for CTRL-W.
+下面這一行會在這一行最後面加上分號
+```
+:execute "normal! mqA;\<esc>`q"
+```
+
+你可以類似這樣的方來搜尋，在預設模式下，你需要使用\+來表示多個字元，這裡使用兩個\\是因為他在execute裡面，需要用兩個\來表示一個。
+```
+  :execute "normal! gg/for .\\+ in .\\+:\<cr>"
+```
+
+之前我們有提到，可以用單引號來表示確切的字，所以你可以這樣用
+```
+:execute "normal! gg" . '/for .\+ in .\+:' . "\<cr>"
+```
+
+
+## Regular expression
+查詢`:h magic`跟`:h pattern-overview`來知道更多。
+
+
 
 
 
