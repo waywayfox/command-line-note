@@ -167,6 +167,57 @@ CTRL-G u	break undo sequence, start new change	     *i_CTRL-G_u*
 查詢`:h magic`跟`:h pattern-overview`來知道更多。
 
 
+## grep
+首先grep這個指令，可以搜尋文件中的pattern，並把結果放進quickfix windows裡面，讓你可以快速換到那些地方，有點像是全域搜索，
+<cword>跟<cWORD>是個特殊符號，會抓到現在游標的字，兩種抓的範圍不同。
+下面的指令雖然在一般的單字可以用，但是假如單字裡有'的話，就會失敗。
+`:nnoremap <leader>g :execute "grep -R '<cWORD>' ."<cr>`
+這裡使用shellescape來嘗試，不過還是無法成功，因為它會在你轉換<cWORD>之前就先呼叫shellescape了，這讓它只是在外面加了''。
+查詢`:h escape()`跟`:h shellescape()`獲得更多資訊。
+`
+:nnoremap <leader>g :execute "grep -R " . shellescape("<cWORD>") . " ."<cr>
+`
+要解決這個問題，我們可以使用expand這個function，它會把裡面的特殊符號先進行轉換，這樣我們就可以順利的把我們游標所在的字轉換成安全的表示了。
+`
+:nnoremap <leader>g :execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+`
+最後可以寫出這樣的結果，grep!是不要跑到第一個結果，copen則是打開quickfix windows，假如有多個結果，用:cp跟:cn來切換。
+經過測試後用vertical copen並不是一個好選擇，因為我的螢幕太小除了檔名前面外看不到其他資訊。
+
+但我們不只要把它變成一個搜尋游標下單字的mapping，而是要把它變成一個operator。
+下面逐行解說他下面的東西再做什麼。
+前兩行的mapping，會在兩種模式下你按下<leader>g時觸發你定義的function。g@後面會讀取你的motion。
+<SID>會根據每個script有不同的值，可以用來更好的分別它屬於那一個script，當你有很多plugin時避免衝突。
+在function中，我們先存下當前的unnamed register，之後在貼回去。
+接著我們就判斷它傳進來的type，我們只接受char跟v兩種模式的grep因為其他模式就不是應該用grep的東西了。
+總之我們將兩者複製下來，它沒有標示目標，所以就被存進@@裡。
+之後我們就呼叫grep，並把quickfix window打開。
+  ```
+nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
+vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
+
+function! s:GrepOperator(type)
+  let saved_unnamed_register = @@
+  if a:type ==# 'v'
+    execute "normal! `<v`>y"
+  elseif a:type ==# 'char'
+    execute "normal! `[v`]y"
+  else
+    return
+  endif
+
+  " after ynak the last select word or range, call grep
+  " @@ is unnamed register
+  silent execute "grep! -R " . shellescape(@@) . " ."
+  copen 10
+  let @@ = saved_unnamed_register
+endfunction
+```
+
+
+
+
+
 
 
 
