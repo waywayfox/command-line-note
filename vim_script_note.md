@@ -192,7 +192,8 @@ CTRL-G u	break undo sequence, start new change	     *i_CTRL-G_u*
 接著我們就判斷它傳進來的type，我們只接受char跟v兩種模式的grep因為其他模式就不是應該用grep的東西了。
 總之我們將兩者複製下來，它沒有標示目標，所以就被存進@@裡。
 之後我們就呼叫grep，並把quickfix window打開。
-  ```
+
+```
 nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
 vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
 
@@ -214,19 +215,34 @@ function! s:GrepOperator(type)
 endfunction
 ```
 
+## List
+你可以用[<e1>, <e2>]來定義list，就跟普通array的使用方式一樣，支援負數引索
+你可以在後面加上範圍來slice這個array
+`
+:echo ['a', 'b', 'c', 'd', 'e'][0:2]
+`
+對string也有效，不過要注意string不支援負數index，但是可以用在slice上
+`
+:echo "abcd"[-1] . "abcd"[-2:]
+`
+用加號來結合兩個list
+`
+:echo [1, 3, 5] + [2, 4]
+`
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+下面列出一些支援的function，注意reverse會更新原本的list
+`
+  :let foo = ['a']
+  :call add(foo, 'b')
+  :echo foo " ['a', 'b']
+  :echo len(foo) " 2
+  :echo get(foo, 0, 'default') " a
+  :echo get(foo, 100, 'default') " default
+  :echo index(foo, 'b') " 1
+  :echo index(foo, 'nope') " -1
+  :echo join(foo) " a b
+  :echo join(foo, '---') " a---b
+  :echo reverse(foo) " ['b', 'a']
+`
 
 
