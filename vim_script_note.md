@@ -246,3 +246,59 @@ endfunction
 `
 
 
+## loop
+vim裡面有兩種loop，for跟while，兩種都很簡單，用`:h for`跟 `:h while`去查就好。下面附上簡易的結構。
+也可以使用break跟continue。
+### for
+for 只能用在遍尋object。
+```
+  :let c = 0
+  :for i in [1, 2, 3, 4]
+  :  let c += i
+  :endfor
+```
+
+### while
+while 可以設定條件。
+```
+  :let c = 1
+  :let total = 0
+
+  :while c <= 4
+  :  let total += c
+  :  let c += 1
+  :endwhile
+```
+
+## Dictionary
+基本上就javascript的object，除了["index"]外，用點也可以，要注意一點是他會把你的index換成string，
+remove能做的是比較齊全，不過unlet做的事也差不多，看個人喜好，不過unlet會拋出錯誤當你想刪除不存在的index。
+另外，Dictionary並不保證順序是你插入的順序。
+`
+:echo {'a': 1, 100: 'foo',}['a']
+:echo {'a': 1, 100: 'foo',}.a
+:let foo.b = 200
+:let test = remove(foo, 'a')
+:unlet foo.b
+:echom get({'a': 100}, 'a', 'default')
+:echom has_key({'a': 100}, 'a') " 1
+:echom has_key({'a': 100}, 'b') " 0
+:echo items({'a': 100, 'b': 200}) " [['a', 100], ['b', 200]]
+:echo keys({'a': 100, 'b': 200}) " ['a', 'b']
+:echo values({'a': 100, 'b': 200}) " [100, 200]
+`
+
+## Path
+
+
+
+
+
+
+
+
+
+
+
+
+
