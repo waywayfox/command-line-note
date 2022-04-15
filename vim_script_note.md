@@ -136,15 +136,6 @@ endfunction
 :echo funcs[1](['a', 'b', 'c'], 1)
 ```
 
-
-
-
-
-
-
-
-
-
 ## String
 注意在你使用
 `echo`跟`echom`時，特殊符號會有時會有不同的顯示方式，例如`\n`。
@@ -306,13 +297,22 @@ remove能做的是比較齊全，不過unlet做的事也差不多，看個人喜
 `
 
 ## Path
-
-
-
-
-
-
-
+你可以用一些expand來抓住現在的路徑
+`
+:echom expand('%:p')
+`
+你也可以用下面這個東西來取得你想要檔案的路徑，後面的表現方式可以查filename-modifiers。
+`
+  :echom fnamemodify('foo.txt', ':p')
+`
+simplify()則可以簡化你現在輸入的路徑。
+globpath則可以抓到你指定路徑下的檔案，用第二個參數來輸入你想要抓的檔案的pattern，使用wildcard的pattern來辨別，
+你可以用split來分離他們。
+```
+  :echo globpath('.', '*')
+  :echo split(globpath('.', '*'), '\n')
+  :echo split(globpath('.', '*.txt'), '\n')
+```
 
 
 
