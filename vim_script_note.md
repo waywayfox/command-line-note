@@ -126,6 +126,23 @@ endfunction
 
 :call AssignGood("test")
 ```
+你也可以把function存在variable裡面，不過這個變數一定要大寫開頭。
+```
+:let Myfunc = function("Append")
+```
+也可以被存在list中
+```
+:let funcs = [function("Append"), function("Pop")]
+:echo funcs[1](['a', 'b', 'c'], 1)
+```
+
+
+
+
+
+
+
+
 
 
 ## String
