@@ -315,6 +315,29 @@ globpath則可以抓到你指定路徑下的檔案，用第二個參數來輸入
 ```
 
 
+## Syntax
+要進行syntax的判定，有三種方式，一種是直接把個別的keyword分成不同的group，在指定給vim內建的group來分顏色，
+另一種則是使用regex來判定，第三種是設定region，也就是設定開頭跟結尾。
+```
+syntax keyword potionKeyword if elsif else
+highlight link potionKeyword Keyword
+
+syntax match potionOperator "\v-\="
+highlight link potionOperator Operator
+
+syntax region potionString start=/\v"/ skip=/\v\\./ end=/\v"/
+highlight link potionString String
+```
+
+查詢group-name來知道更多group
+假如同一段文字被對應到多個group，則以下列規則分類，參見 syn-priority。
+
+
+
+
+
+
+
 
 
 
