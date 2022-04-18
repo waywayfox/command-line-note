@@ -332,8 +332,10 @@ highlight link potionString String
 查詢group-name來知道更多group
 假如同一段文字被對應到多個group，則以下列規則分類，參見 syn-priority。
 
-
-
+## folding
+有不同的方式可以設定折疊，請參照`:help usr_28`
+基本上使用zf可以手動設定折疊，zc跟zo是關和開，zr跟zm是全部的開與關。
+其他方式可以參照上面的usr_28。
 
 
 
