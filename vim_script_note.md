@@ -337,6 +337,13 @@ highlight link potionString String
 基本上使用zf可以手動設定折疊，zc跟zo是關和開，zr跟zm是全部的開與關。
 其他方式可以參照上面的usr_28。
 
+使用indent時，會根據你的縮排來設定要不要folding，你還可以設定foldlevel要縮多少才會被fold。
+
+使用marker的話就是用一些字元排列來當作開始跟結束的標示，預設是{{{}}}，雖然很彈性，不過會需要增加多餘的行數。
+
+當你使用expr來當作folding的方法時，你要自己定義你的foldexpr，vim會對每一行執行你所寫的function，它需要回傳他的foldlevel，
+並跟據foldlevel來製作這些folding，除了數字外，它還有一些特殊的字串來表示folding，你可以查fold-expr。
+
 
 
 
