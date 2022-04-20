@@ -345,6 +345,31 @@ highlight link potionString String
 並跟據foldlevel來製作這些folding，除了數字外，它還有一些特殊的字串來表示folding，你可以查fold-expr。
 
 
+## Section
+一般來說，你可以使用{跟}來進行section的移動，除此之外，[[, ]], [], ][也可以用來進行section的移動，
+不過因為它遵照的則是很久之前的檔案了，所以你可以重新定義section的移動，讓你在你想要的filetype更好的移動，
+更詳細的例子請參考vim-wayway-potion裡的section，
+首先，你需要重新思考你到底需要怎樣的移動方式，是移動到下一空行，移動到下一個function，還是其他移動方式，
+跟之前mapping的概念相同，你需要重新定義這些section的移動方式，讓它呼叫你指定的function。
+注意這裡我們使用noremap，並沒有用nnoremap是因為我們想要在operator-pending mode也使用它，像是d]]之類的。
+另外就是visual mode下的前進跟後退。
+```
+noremap <script> <buffer> <silent> ]] :call <SID>NextSection(1, 0, 0)<cr>
+vnoremap <script> <buffer> <silent> ]] :<c-u>call <SID>NextSection(1, 0, 1)<cr>
+```
+下面的例子只會讓你移動到下一個foo的位置，不過你可以了解他的概念，基本上利用搜尋的方式前往下一個你設計的pattern，
+你也可以用search()之類的，看個人喜好。
+```
+function! s:NextSection(type, backwards)
+    if a:backwards
+        let dir = '?'
+    else
+        let dir = '/'
+    endif
+
+    execute 'silent! normal! ' . dir . 'foo' . "\r"
+endfunction
+```
 
 
 
