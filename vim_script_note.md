@@ -1,5 +1,6 @@
 # Learn Vimscript the Hard Way
-# Echoing Messages
+
+## Echoing Messages
 echo 跟 echom 都會印出東西，不過echo會直接消失，若是你想印出點東西來debug的話，echom會是比較好的選擇，因為你的script會越來越大
 你可以用`:messages` 來檢查印出來的東西。
 
@@ -371,7 +372,23 @@ function! s:NextSection(type, backwards)
 endfunction
 ```
 
+## External command
+你可以使用:!<cmd>來執行外部的指令，用這個，你也可以經由mapping來做出一些方便的設定，
+例如，編譯當前的檔案之類的，這樣你就不用每次退出vim編譯完再進來了，
+```
+function! s:PotionCompileAndRunFile()
+  write
+  silent !clear
+  execute "!" . g:potion_command . " " . bufname("%")
+endfunction
+```
 
+經過一些方式，例如system()，可以讓你取得command得到的結果，甚至開啟另一個split來存放這個結果。
+```
+  let bytecode = system(g:potion_command . " -c -V " . bufname("%") . " 2>&1")
+  vsplit __Potion_Bytecode__
+  call append(0, split(bytecode, '\v\n'))
+```
 
 
 
