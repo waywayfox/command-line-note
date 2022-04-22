@@ -390,6 +390,31 @@ endfunction
   call append(0, split(bytecode, '\v\n'))
 ```
 
+## autoload
+在你的plugin或檔案只有很小一部分的時候，載入檔案並不會花很多時間，但當你的script很大時，可能會讓你開啟vim時變得比較慢，
+為了解決這種事，你可以讓當使用者需要時，再去載入檔案，你可以這樣定義你的呼叫，這代表了這檔案的路徑跟檔名，
+下面指的是去呼叫在autoload/potion/running.vim這個檔案裡的function。
+```
+nnoremap <buffer> <localleader>r :call potion#running#PotionCompileAndRunFile()<cr>
+```
+若是這個function已經被載入了，它就正常的被呼叫，若是沒有它就去嘗試載入這個檔案，在試著去執行function，
+當然，若是你根本沒有定義這個function，它就會嘗試一直載入，再一直失敗。
+在autoload裡的檔案，也要按照相同的方式去定義。
+```
+function! potion#running#PotionCompileAndRunFile()
+  write
+  silent !clear
+  execute "!" . g:potion_command . " " . bufname("%")
+endfunction
+```
+同樣的方式，你也可以用這樣的方式去得到variable，你可以查詢autoload來得到更多資訊。
+
+
+
+
+
+
+
 
 
 
