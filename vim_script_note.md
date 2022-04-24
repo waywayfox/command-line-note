@@ -4,15 +4,11 @@
 echo 跟 echom 都會印出東西，不過echo會直接消失，若是你想印出點東西來debug的話，echom會是比較好的選擇，因為你的script會越來越大
 你可以用`:messages` 來檢查印出來的東西。
 
- 來檢查印出來的東西。
-
-
 ## Setting Options
 Vim 裡面有兩種options,一種是boolean option(只會有on/off)，另一種則接受值。
 所有boolean option都是同樣的設定方法，`:set <name>`跟`:set no<name>`
 你可以用`:set number!`來toggle options，或用`:set number?`來查詢option的狀態。
 `:setlocal` 可以讓你只針對當前的buffer進行設定，不過若這個options只有globla，就依然會對所有buffer起作用。
-
 
 ## abbreviations
 Vim裡面，你可以定義縮寫，它有點像keymapping, 但只用在insert, replace跟cmd mode。
@@ -22,7 +18,6 @@ Vim裡面，你可以定義縮寫，它有點像keymapping, 但只用在insert, 
 `:iabbrev @@    steve@stevelosh.com`
 當你在insert mode時，當你輸入任何非keyword的字元，它就會檢查並替換。
 `:set iskeyword?` 你可以用這個來查詢keyword是哪些。
-
 
 ## autocmd
 `:autocmd <event> <pattern> <command>`
@@ -40,7 +35,6 @@ Vim裡面，你可以定義縮寫，它有點像keymapping, 但只用在insert, 
 要注意normal! 沒辦法辨認出特殊字元，像是`<cr>`。有幾個可以繞過這個問題的方法，其中一個就是使用`execute`
 所以下面這一行指令，會先把\r換成enter，而不是單純的看成4個字元。使用`:h pattern-overview`來查訊更多轉換。
 `:onoremap ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>`
-
 
 ## status line
 status line是顯示在最下面的那個狀態欄，你可以自己定義它。
@@ -66,7 +60,6 @@ status line是顯示在最下面的那個狀態欄，你可以自己定義它。
 代表給只給這個buffer用，去查internal-variables找更多其他可用的前綴。
 `:let b:hello = "world"`
 
-
 ## conditions
 ```
 if <>
@@ -81,7 +74,6 @@ endif
 永遠不要相信使用者的設定，你該使用`==?`無視大小寫跟`==#`分辨大小寫來進判斷。
 雖然在比較數字時沒差，不過你該永遠使用`==#`來做判斷。
 `:h expr4`查詢更多比較符號。
-
 
 ## functions
 function的名稱一定要大寫開頭。
@@ -145,8 +137,6 @@ endfunction
 `:h expr-quote`查詢更多特殊符號。
 你可以用在insert mode使用i_CTRL_V，這可以讓你直接輸入你下一個打的特殊字元。
 
-
-
 ## normal execute
 normal會連map一起算進去，如果你不想要你打的東西被map的話，要加上!才行。
 你該永遠使用`normal!`。
@@ -170,7 +160,6 @@ CTRL-G u	break undo sequence, start new change	     *i_CTRL-G_u*
 ```
 :execute "normal! gg" . '/for .\+ in .\+:' . "\<cr>"
 ```
-
 
 ## Regular expression
 查詢`:h magic`跟`:h pattern-overview`來知道更多。
@@ -254,7 +243,6 @@ endfunction
   :echo reverse(foo) " ['b', 'a']
 `
 
-
 ## loop
 vim裡面有兩種loop，for跟while，兩種都很簡單，用`:h for`跟 `:h while`去查就好。下面附上簡易的結構。
 也可以使用break跟continue。
@@ -315,7 +303,6 @@ globpath則可以抓到你指定路徑下的檔案，用第二個參數來輸入
   :echo split(globpath('.', '*.txt'), '\n')
 ```
 
-
 ## Syntax
 要進行syntax的判定，有三種方式，一種是直接把個別的keyword分成不同的group，在指定給vim內建的group來分顏色，
 另一種則是使用regex來判定，第三種是設定region，也就是設定開頭跟結尾。
@@ -344,7 +331,6 @@ highlight link potionString String
 
 當你使用expr來當作folding的方法時，你要自己定義你的foldexpr，vim會對每一行執行你所寫的function，它需要回傳他的foldlevel，
 並跟據foldlevel來製作這些folding，除了數字外，它還有一些特殊的字串來表示folding，你可以查fold-expr。
-
 
 ## Section
 一般來說，你可以使用{跟}來進行section的移動，除此之外，[[, ]], [], ][也可以用來進行section的移動，
@@ -409,10 +395,16 @@ endfunction
 ```
 同樣的方式，你也可以用這樣的方式去得到variable，你可以查詢autoload來得到更多資訊。
 
-
-
-
-
+## Documentation
+要讓別人知道你的plugin怎麼用，你一定要有好的文件，這樣別人才能找到正確的使用方式，
+```
+:helptags <dir>
+```
+在你建立好你的文件之後，你可以打上這句，它會把掃描路徑中的所有.txt，並加入helptags中，
+這樣當你在使用:h時，它就能順利找到東西了。
+在你撰寫時，你可以把filetype設定成help，看看最後呈現的結果是如何，看完在換回text。
+比較需要主意的是help tag要用*<tags>*這樣來表示，而用來跳轉的hot key，用|hot-key|來表示。
+另外，在看help文件時，可以用<c-]>來跳到游標所在的hot-key，<c-o>來跳回上一個。
 
 
 
