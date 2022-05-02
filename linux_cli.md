@@ -1,6 +1,35 @@
 # 維維的linux command line 小筆記
 
 ## ls
+-l 顯示詳細資訊 \
+-a 顯示隱藏檔 \
+-h 更好讀 \
+
+-F 會加上特殊字元來表示這個檔案的種類
+* @ symbolic link
+* \* executable
+* = socket
+* | pipe
+* > door
+* / directory
+
+-r 反向輸出
+-R 遞迴到各個子目錄
+-t 按照時間
+-S 按照大小
+-i 列出Inode
+-d 只列出目錄
+-n 列出UID跟GID
+-B 隱藏備份
+
+
+下面的是一些自定義輸出的部份，更詳細的設定就請需要在查吧
+--time-style 定義時間輸出格式
+--format     定義排版
+--sort       定義排序方式
+--width      定義輸出寬度
+--color      要不要顏色輸出
+
 
 ## cd
 

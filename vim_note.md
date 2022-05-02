@@ -26,8 +26,8 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 
 ## 在vim 中使用指定
 
-`:! <command>`
-`:r ! <command>` 在目前位置貼上指定內容
+`:! <command>` \
+`:r ! <command>`或 `!}<command>` 在目前位置貼上指定內容
 
 ## 折疊行
 使用`zf`折疊選取行，用`l`展開。
