@@ -77,4 +77,58 @@
 `reboot`
 
 
+## sed
+也是用來做文本處理
+常用的使用方法
+-e 可以在後面指定一串pattern，有點像是vim的操作。
+```
+echo "a,  b,  c, d, e, f , g, h,i " | sed -e "s/,//g"
+a  b  c d e f  g hi
+```
+-n <num>p 可以照到你想要的那一行
+```
+sed -n 5p << EOF
+aaaa
+bbbb
+cccc
+dddd
+eeee
+ffff
+gggg
+EOF
+eeee
+```
+
+
+
+
+
+## cut
+cut 是一個可以用來擷取字串的指令
+最常用的指令是-c 後面接上你要擷取的範圍，要分段也可以用逗點隔開
+```
+echo "1234567890asdfghjk" | cut -c 2-10
+234567890
+echo "1234567890asdfghjk" | cut -c 2-5,8-10,12,14
+2345890sf
+```
+假如你要設定是要刪掉的部份，在後面加上--complement
+```
+echo "1234567890asdfghjk" | cut -c 2-5,8-10,12,14 --complement
+167adghjk
+```
+假如你要拆的資料是用某些符號區分，則用-d表示分隔符, 空格的話你也以用' '來表示。-f代表要取得的欄位，一樣可以用逗點分隔。
+```
+echo "a,  b,  c, d, e, f , g, h,i " | cut -d , -f 2,4,6-8
+  b, d, f , g, h
+```
+你也可以指令輸出的分隔符使用--output-delimiter=""
+```
+echo "a,  b,  c, d, e, f , g, h,i " | cut -d , -f 2,4,6-8 --output-delimiter="OwO"
+  bOwO dOwO f OwO gOwO h
+```
+
+
+
+
 
