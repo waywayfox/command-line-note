@@ -79,6 +79,9 @@
 ## awk
 文本處理
 
+-F 指定分隔符
+
+
 
 ## VM shared folder
 `sudo apt install virtualbox-gues-utils`
@@ -181,9 +184,45 @@ find . -name "*.c" | xargs rm -f # delete all .c file
 find .-name '*.c' | xargs grep 'stdlib.h'
 ```
 
+## wc
+wc是來計算檔案中的行數，字數及大小(bype)的工具。
+基本使用方式就是在後面加上你要計算的檔案
+```
+wc intro.sh echon.sh
+  4  10  68 intro.sh
+  9  33 146 echon.sh
+ 13  43 214 total
+```
+-l 只計算行數
+-w 只計算字數
+-c 只計算大小
+-m 計算char的數量，假如你有用英文以外的語言的話。
+-L 找出最長的那行。
 
 
+## tr
+tr可以用來替換，或刪除你所指定的字元。
+```
+tr [-c] [-d] [-s] [delete pattern] [replace pattern]
+```
+-c, --complement 不要替換符合第一個pattern的所有東西，其餘的所有刪除。
+-d 替換所有符合第一個pattern的東西。
+-s 刪除所有重複的pattern，只保留第一個。
+你可以用--help來知道用什麼來表示pattern。
 
+
+替換大小寫
+```
+echo aijfwoOIJJFNjfoie | tr "[[:lower:]]" "[[:upper:]]"
+AIJFWOOIJJFNJFOIE
+```
+刪掉重複的字母
+```
+echo aaaaaAAAAAaaBBBbbbBB | tr -s "[a-z]"
+aAAAAAaBBBbBB
+echo aaaaaAAAAAaaBBBbbbBB | tr -s "[a-z][A-Z]"
+aAaBbB
+```
 
 
 
