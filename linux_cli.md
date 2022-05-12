@@ -10,24 +10,24 @@
 * \* executable
 * = socket
 * | pipe
-* > door
+* \> door
 * / directory
 
--r 反向輸出
--R 遞迴到各個子目錄
--t 按照時間
--S 按照大小
--i 列出Inode
--d 只列出目錄
--n 列出UID跟GID
+-r 反向輸出 \
+-R 遞迴到各個子目錄 \
+-t 按照時間 \
+-S 按照大小 \
+-i 列出Inode \
+-d 只列出目錄 \
+-n 列出UID跟GID \
 -B 隱藏備份
 
 
 下面的是一些自定義輸出的部份，更詳細的設定就請需要在查吧
---time-style 定義時間輸出格式
---format     定義排版
---sort       定義排序方式
---width      定義輸出寬度
+--time-style 定義時間輸出格式 \
+--format     定義排版 \
+--sort       定義排序方式 \
+--width      定義輸出寬度 \
 --color      要不要顏色輸出
 
 
@@ -86,8 +86,8 @@ echo $(LANG=en_us_8859_1; date '+weekday="%a" month="%b" day="%e" year="%G"')
 
 
 ## VM shared folder
-`sudo apt install virtualbox-gues-utils`
-`sudo adduser [username] vboxsf`
+`sudo apt install virtualbox-gues-utils` \
+`sudo adduser [username] vboxsf` \
 `reboot`
 
 
@@ -195,10 +195,10 @@ wc intro.sh echon.sh
   9  33 146 echon.sh
  13  43 214 total
 ```
--l 只計算行數
--w 只計算字數
--c 只計算大小
--m 計算char的數量，假如你有用英文以外的語言的話。
+-l 只計算行數 \
+-w 只計算字數 \
+-c 只計算大小 \
+-m 計算char的數量，假如你有用英文以外的語言的話。 \
 -L 找出最長的那行。
 
 
@@ -207,9 +207,9 @@ tr可以用來替換，或刪除你所指定的字元。
 ```
 tr [-c] [-d] [-s] [delete pattern] [replace pattern]
 ```
--c, --complement 不要替換符合第一個pattern的所有東西，其餘的所有刪除。
--d 替換所有符合第一個pattern的東西。
--s 刪除所有重複的pattern，只保留第一個。
+-c, --complement 不要替換符合第一個pattern的所有東西，其餘的所有刪除。 \
+-d 替換所有符合第一個pattern的東西。 \
+-s 刪除所有重複的pattern，只保留第一個。 \
 你可以用--help來知道用什麼來表示pattern。
 
 
