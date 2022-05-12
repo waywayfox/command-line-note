@@ -107,7 +107,7 @@ lu@lu-VirtualBox:~$ echo $?
 0
 ```
 
-下面是if 跟 case的表示方式
+下面是if 跟 case的表示方式，要注意[ <condition> ] 這個中括號是會使用上面說的test這個command，
 ```
 if [ <condition> ]; then
   # do something
@@ -122,6 +122,18 @@ case $var in
   1 ) #dosomething# ;;
 esac
 ```
+有時你在判斷式內呼叫function時，可能會出現錯誤，可以試試把中括號拿掉，或是先算完在丟變數進去，或用下面的方法。
+```
+testfunction()
+{
+  return 1
+}
+
+if [ ! $(testfunction 'asuka') ] ; then
+  echo in here 0
+fi
+```
+
 
 
 
