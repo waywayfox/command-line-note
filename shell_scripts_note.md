@@ -1,5 +1,8 @@
 # Shell script note
 
+要注意，bash跟dash的有些語法有些不同，可能會造成script失效，請使用對正確的執行。
+
+
 ## 路徑與執行
 最簡單的方式，就是使用sh，這可以用來簡單測試這個script。
 ```
@@ -32,11 +35,14 @@ echo "Hello world"
 要使用變數時，你得在前面加上$才行，跟上面嘗試印出PATH一樣，是用`echo $PATH`而不是PATH，
 除了這樣的環境變數之外，在function的參數上也有類似的用法。
 $<num>，表示第幾個參數，從1開始。 \
+$\_ 最後一個參數
 $? 上一個執行的指令的exit status。 \
 $# 傳進的參數的數量。 \
 $0 當前的script name \
 $\* 所有參數 \
-$@ 所有參數
+$@ 所有參數 \
+$$ pid
+
 
 
 ## 字串處理
@@ -59,10 +65,6 @@ echo "input 1~10? [1]: "
 read answer
 ${answer=1}
 ```
-
-
-
-
 
 
 ## 判斷式
@@ -134,6 +136,29 @@ if [ ! $(testfunction 'asuka') ] ; then
 fi
 ```
 
+## trap
+trap 有點類似註冊event handler，它可以讓你設定在收到某種信號時，執行某些command。
+一般使用的方式是這樣
+```
+trap "<command>" SIGNAL
+```
+在結束時刪掉test.txt
+```
+trap "rm test.txt" EXIT
+```
+你也可以指定空字串，那他在收到這個信號時就什麼都不會做，可以用不加空字串來回到初始設定的行為。
+```
+trap "" EXIT
+trap EXIT
+```
+加上-p可以查看當前信號的行為
+```
+trap -p [SIGNAL]
+```
+你可以用-l來查看所有信號, 比較常用的還有EXIT, DEBUG, RETURN, ERR等等。
+```
+trap -l
+```
 
 
 

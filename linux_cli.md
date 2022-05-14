@@ -30,6 +30,12 @@
 --width      定義輸出寬度 \
 --color      要不要顏色輸出
 
+## cat
+
+-n 輸出行號
+
+
+
 
 ## cd
 
@@ -55,6 +61,26 @@ echo $(LANG=en_us_8859_1; date '+weekday="%a" month="%b" day="%e" year="%G"')
 ```
 
 ## grep
+grep 是用來查詢檔案中是否有指定的字串用的。
+```
+grep <pattern> <file ...>
+```
+-i 不區分大小寫 \
+-n 顯示行號 \
+-r 遞迴查詢目錄，可以搭配--include=來指定檔名的pattern
+```
+grep -r echo ~/Documents/scripts
+grep -r include="*.sh" echo ~/Documents/scripts
+```
+
+使用下面三個flag的話，除了顯示出現匹配的那行外，還能顯示前後幾行。
+-A (After) 後面 \
+-B (Before) 前面 \
+-C (Context) 前後
+```
+grep -r -C1 --include="valid*" cut .
+```
+
 
 ## find
 `find <path> -name <filename>`
@@ -227,16 +253,34 @@ aAaBbB
 ```
 
 
+##　sort
+sort 使用來排序東西的，假如你有一些log紀錄或是資料需要排序，就可以使用。
 
 
+下面是可以加的flag
+-b 忽視行前空白
+-o 輸出檔案
+-f 不分大小寫
+-u 刪除重複的資料，只留下一筆。
+-r 反向輸出
+-t 指定分隔號
+-k 指定分隔之後的區塊
+-n 把資料當作數字比較
+-h 把簡單的單位計算進去
+-R 只是整理資料
+-M 用月份排序，你可能要把語系設成英文比較好
 
-
-
-
-
-
-
-
+## uniq
+這個指令是用來刪除連續且重複的行數的
+-c 顯示重複的數量 \
+-d, -D 只顯示重複的行 \
+--all-repeated=separate 用空格分開那些重複的行 \
+--all-repeated=prepend 在前面加一行空白 \
+-u 只顯示沒有重複的行 \
+-f 跳過欄位，不會檢查前幾個欄位，用空格或tab來分割。 \
+-s 跳過前幾個字 \
+-w 只比較前幾個字 \
+-i 讓它區分大小寫
 
 
 
