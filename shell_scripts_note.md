@@ -209,9 +209,21 @@ bc -q -l << EOF
 EOF
 ```
 
+## eval
+eval 這個指令會把之後的東西作為bash的指令執行，並代換裡面的特殊符號。
+
+
 ## 引入檔案
 假如你想要引入你其他寫的command或是function，你可以使用.來達成。
 不過要注意你的檔案需要在PATH之中才行。
+
+
+## 使用者
+linux裡面有許多使用者，你可以在/etc/passwd的裡面找到
+你也可以這樣找到所有uid大於99的使用者。
+```
+for name in $(cut -d: -f1,3 /etc/passwd | awk -F: '$2 > 99 {print $1}')
+```
 
 
 
