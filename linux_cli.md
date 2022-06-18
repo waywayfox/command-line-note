@@ -83,18 +83,52 @@ grep -r -C1 --include="valid*" cut .
 
 
 ## find
+
+-name 可以搜尋特定的名稱，也支援pattern搜尋，
+-iname 則可以無視大小寫搜尋
+
 `find <path> -name <filename>`
 在路徑下尋找檔名
-
 
 `find <path> -name *.c`
 在路徑下尋找所有.c檔
 
+
+-type 可以搜尋相關的類型
+d 目錄 \
+f 普通檔案 \
+p pipe檔（FIFO） \
+l 連結檔 \
+s socket檔
+
 `find <paht>  -type d -name aaa`
 在路徑下尋找所有aaa的資料夾
 
+
+-perm 可以判別權限
+`find . -type f -perm 0777`
+`find . -type f ! -perm 0777`
+
+
+-exec 可以對找到的檔案做某些動作
 `find <path> -user <user name> -exec rm -fr {} \;`
 刪除路徑下所有使用者是<user name>的檔案跟資料夾
+
+`find . -type f -perm 0777 -print -exec chmod 644 {} \;`
+將找到權限為777的檔案的權限換成644
+
+-user 用來判斷使用者
+`find / -user root -name gtwang.txt`
+
+-group 判斷群組
+`find /home -group developer`
+
+-size 判斷大小，用加減來判斷範圍。
+`find . -size +50M -size -100M`
+
+
+-empty 尋找空檔案或空目錄
+
 
 
 -print0 假設你要處理有空白字元的檔案，把這個加在最後面，它會使用null來分格輸出。
@@ -170,7 +204,7 @@ echo "a,  b,  c, d, e, f , g, h,i " | cut -d , -f 2,4,6-8 --output-delimiter="Ow
 alias [-p] [name=[value] ...]
 unalias [-a] [name ...]
 ```
--p可以查看你現在所有設定的別名，
+-p可以查看你現在所有設定的別名， \
 -a則是刪除所有的別名設定，不過在ubuntu上已經有定義一些預設的別名，請確認你真的不要在刪掉。
 
 設置的別名不能包含變數($1之類的)，必須是純指令。
@@ -183,8 +217,8 @@ alias la='ls -A'
 使用這個指令時，它會進入輸入模式，在你ctrl-d結束之後，它會把你所輸入的東西分割，
 並用作為某個指令的參數傳進去，假如你沒有指令指令，它預設是/bin/echo。
 
-預設上，它使用空格跟換行來分割你的輸入。
--d 讓你指令分割符。
+預設上，它使用空格跟換行來分割你的輸入。 \
+-d 讓你指令分割符。 \
 -n 讓你決定一次傳進去的數量，像下面，它一次就只會傳3個參數進去，所以就被分成了2次echo呼叫。
 ```
 echo a b c d e f | xargs -n 3
@@ -198,9 +232,9 @@ echo a b c ?...y
 a b c
 echo d e f ?...n
 ```
--r 避免空字串
--0 使用null來當分隔，假如你需要處理含有空白字元的檔案時可以用
--t 則會顯示它執行了哪些指令。
+-r 避免空字串 \
+-0 使用null來當分隔，假如你需要處理含有空白字元的檔案時可以用 \
+-t 則會顯示它執行了哪些指令。 \
 
 若是你想要使用其他指令，只需要把它加在xargs就好，像是find或是grep都能有很好的效果
 假如你怕執行到錯誤的指令，可以用上面的-p來確認。
@@ -258,16 +292,16 @@ sort 使用來排序東西的，假如你有一些log紀錄或是資料需要排
 
 
 下面是可以加的flag
--b 忽視行前空白
--o 輸出檔案
--f 不分大小寫
--u 刪除重複的資料，只留下一筆。
--r 反向輸出
--t 指定分隔號
--k 指定分隔之後的區塊
--n 把資料當作數字比較
--h 把簡單的單位計算進去
--R 只是整理資料
+-b 忽視行前空白 \
+-o 輸出檔案 \
+-f 不分大小寫 \
+-u 刪除重複的資料，只留下一筆。 \
+-r 反向輸出 \
+-t 指定分隔號 \
+-k 指定分隔之後的區塊 \
+-n 把資料當作數字比較 \
+-h 把簡單的單位計算進去 \
+-R 只是整理資料 \
 -M 用月份排序，你可能要把語系設成英文比較好
 
 ## uniq
@@ -281,6 +315,28 @@ sort 使用來排序東西的，假如你有一些log紀錄或是資料需要排
 -s 跳過前幾個字 \
 -w 只比較前幾個字 \
 -i 讓它區分大小寫
+
+
+## curl
+
+基本用法
+`curl [options] [URL...]` \
+`crul https://www.google.com`
+
+-o, -O 下載檔案 \
+-L redirect \
+-X, --request [GET|POST|PUT|DELETE|PATCH] \
+-H, --header  指定header \
+-i, --include 顯示header \
+-d 指定request body \
+-v 輸出更多訊息，debug用 \
+-u user[:password] 用來驗證，這是BASIC驗證，假如用不同的驗證方式你要加上其他flag，如--ntlm。 \
+-b, --cookie 帶cookie \
+-A, --user-agent 有時server會阻擋curl或wget的請求，加上user agent來嘗試騙過他們。 \
+`-A "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0"`
+
+
+
 
 
 
