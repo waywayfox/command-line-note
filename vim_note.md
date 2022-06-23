@@ -68,9 +68,31 @@ More info: https://github.com/ctrlpvim/ctrlp.vim
 `cs` 後面加你要改動的跟你要變成的
 
 ## bookmark
-use `m[a-z]` to set the bookmark.
-use ```[a-z]`` to move to bookmark.
-use `:marks` to check the bookmarks you save.
+使用bookmark你可以跳到你所記錄的位置，每個buffer都可以在a~z紀錄各自的bookmarks，但是大寫的A~Z是紀錄global的書籤。
+
+你可以用'或是\`來跳轉到書籤位置，差別只在你會停在當初紀錄的位置還是那一行的開頭。
+
+use `m[a-z]` to set the bookmark. \
+use `` `[a-z] `` to move to bookmark. \
+use `:marks` to check the bookmarks you save. 後面加上字母就可差看單獨的書籤位置。
+
+`` ]` `` 跟`` [` `` 可以跳到下一個或上一個小寫書籤的位置。
+
+下面是一些特殊的marks \
+`` `. `` 回到當前buffer上一次改動的地方 \
+`` `" `` 回到上一次離開時的位置 \
+`` `[0-9] `` 回到上一次離開vim時的檔案，0是上一個，之後以此類推。 \
+``` `` ``` 點擊兩次回到上一個地方
+
+`` `] `` 回到前一個或後一個修改或複製的位置 \
+`` `> `` 回到上一次visual mode的開頭或結尾
+
+當你砍掉你設置marks的那一行，marks他也會一起被砍掉。ㄨ
+當你:bw 一個buffer時，同時也會刪掉這個buffer的marks。
+
+`:delmarks ab` 刪掉a跟b裡面存的bookmarks \
+`:delmarks!` 刪掉所有小寫的bookmarks
+
 
 ## digraph
 特殊字元，你可以查詢24.9，在insert mode打<c-k> <組合>來打出你想要的字。
