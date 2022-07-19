@@ -87,7 +87,7 @@ use `:marks` to check the bookmarks you save. 後面加上字母就可差看單�
 `` `] `` 回到前一個或後一個修改或複製的位置 \
 `` `> `` 回到上一次visual mode的開頭或結尾
 
-當你砍掉你設置marks的那一行，marks他也會一起被砍掉。ㄨ
+當你砍掉你設置marks的那一行，marks他也會一起被砍掉。
 當你:bw 一個buffer時，同時也會刪掉這個buffer的marks。
 
 `:delmarks ab` 刪掉a跟b裡面存的bookmarks \
