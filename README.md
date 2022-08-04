@@ -50,7 +50,7 @@
 
 ## git merge
 
-`git merge --no-ff <branch>`  
+`git merge --no-ff <branch>`
 不使用fast forward，在master為最新版本時，一般狀況merge會把所有branch的commit拉到master，這時可以使用--no-ff在merge時合併整個branch的commit，變回原本merger的情況。
 
 `git merge --squash <branch>`
@@ -82,6 +82,7 @@ git checkout HEAD -- <path/of/file>
 ## git branch
 
 `git branch` 查看所有的分支跟目前所在的分支
+`git branch -m <name>` 改變現在所在分支的名稱
 
 ## git rm
 
@@ -90,7 +91,7 @@ git checkout HEAD -- <path/of/file>
 
 ## git clean
 
-`git clean` 
+`git clean`
 清除目前所有untracked的檔案，並不會刪除untracked的資料夾。
 
 `git clean -d`
@@ -98,7 +99,7 @@ git checkout HEAD -- <path/of/file>
 
 在進行清除時，一定要配合下面3個其中一個進行。
 
-`git clean -f` 
+`git clean -f`
 強制清除。
 
 `git clean -n`
