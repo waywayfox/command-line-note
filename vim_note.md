@@ -24,6 +24,18 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 
 假如在某些搜尋下導致你的vim顯示 有些怪，你可能需要使用redraw。
 
+
+## Help
+
+搜尋使用
+`:h keyword`
+
+若是你的快捷鍵並不是在normal mode下，在前面加上<mode>_<shortcut>
+`:h i_CTRL-O`
+`CTRL-]` 跳轉到當前游標所在的關鍵字
+`CTRL-o` 跳到上一個地方
+
+
 ## 在vim 中使用指定
 
 `:! <command>` \

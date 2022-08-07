@@ -1,0 +1,30 @@
+body {
+}
+
+#title {
+  color: rgb(24, 173, 67);
+}
+
+.subtitle {
+  color: rgb(255, 93, 43);
+}
+#service-image {
+  background: url("../img/lire.png");
+  background-size: 50px 100px;
+  background-repeat: no-repeat;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
