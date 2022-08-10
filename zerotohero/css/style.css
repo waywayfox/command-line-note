@@ -1,4 +1,5 @@
 body {
+  background: linear-gradient(to bottom, red, yellow);
 }
 
 #title {
@@ -8,10 +9,11 @@ body {
 .subtitle {
   color: rgb(255, 93, 43);
 }
+
 #service-image {
-  background: url("../img/lire.png");
-  background-size: 50px 100px;
-  background-repeat: no-repeat;
+  height: 400px;
+  width: 70%;
+
 }
 
 

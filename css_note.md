@@ -5,6 +5,13 @@
 `<link rel="stylesheet" type="text/css" href="../css/style.css">`
 
 
+
+## Unit
+有分兩種單位，絕對跟相對。
+絕對單位px
+相對單位例如％
+
+
 ## CSS Selectors
 
 ### Element
@@ -98,15 +105,19 @@ inline > id > class > tag
 
 ## Color
 雖然有很多種顏色的表示方式，不過記三種就好，name, hex code, rgb。
+要指定透明度，使用rgba。
 ```
 color: blue;
 color: #1e90ff;
 color: rgb(24, 173, 67);
+background: rgba(39, 168, 3, 0.5);
 ```
 
 ## Back ground
 有很多種個property可以指定背景相關的屬性，如background-color或background-image之類的，不過你可以簡單的用backgroung來表示。
 另外，url也可以使用多張圖片，在後面用逗點隔開就行。
+你可以使用linear-gradient, radial-gradient來製作有漸層的顏色。
+用deg來指定角度。
 ```
   background: url("../img/lire.png");
   background: red;
@@ -114,6 +125,11 @@ color: rgb(24, 173, 67);
   background-size: 50px 100px;
   background-size: cover;
   background-size: contain;
+  background: rgba(39, 168, 3, 0.5);
+  background: linear-gradient(to right top, green, red, blue);
+  background: linear-gradient(160deg, green, red, blue);
+  background: radial-gradient(green 20%, red 40%, blue 55%);
+  background: radial-gradient(circle, green, red, blue);
 ```
 ### background-size
 你可以用這來調整背景圖片的大小
