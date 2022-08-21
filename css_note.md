@@ -8,8 +8,18 @@
 
 ## Unit
 有分兩種單位，絕對跟相對。
-絕對單位px
-相對單位例如％
+絕對單位
+* cm
+* mm
+* in(2.54cm)
+* px(1/96in)
+* pt(1/72in)
+* pc(12pt)
+
+相對單位例如
+em 相對於當前element的x倍大小
+vw 相對於viewport width的幾%
+vh 相對於viewport length的幾%
 
 
 ## CSS Selectors
@@ -138,6 +148,187 @@ background: rgba(39, 168, 3, 0.5);
   background-size: cover; /* 等比例縮放到能夠一張填滿的程度，有可能被裁切 */
   background-size: contain; /* 等比例縮放，不裁切 */
 ```
+
+## Text
+
+### text manipulation
+在文字上顯示線
+```
+  text-decoration: line-through; /* none, underline, overline, inherit */
+```
+對所有文字的大小寫做修正
+```
+  text-transform: capitalize; /* uppercase, lowercase */
+```
+置中，置左，置右
+justify會讓你的所有文字行都使用同樣的行寬，不會因為最後的單字過長就被自動移到下一行。
+```
+  text-align: center; /* left, right, justify */
+```
+
+
+### Font
+字體大小
+```
+  font-size: 2em;
+```
+
+字體粗細，它可以設定的數值跟字體有關，每種字體能設定的數值不同。
+```
+  font-weight: 100;
+```
+斜體
+```
+  font-style: italic; /* normal, oblique */
+```
+#### Font Family
+font family讓你可以設定多種字體，當前面的字體無法使用時，使用後面的字體，用逗點隔開。
+要指定自己，你可以直接標示字體名稱，或是使用通用family。
+
+常用的通用familyserif, sans-serif, monosapce, cursive, fantasy等等。
+
+```
+  font-family: "Times New Roman", serif;
+```
+
+## 邊界
+
+元素的三個邊界基本是下圖所示
+
+```
+______________________________________
+|              MARGIN                |
+|   _______________________________  |
+|   |          BORDER             |  |
+|   |  _________________________  |  |
+|   |  |       PADDING         |  |  |
+|   |  |  ___________________  |  |  |
+|   |  |  |                 |  |  |  |
+|   |  |  |    CONTENT      |  |  |  |
+|   |  |  |                 |  |  |  |
+|   |  |  ___________________  |  |  |
+|   |  |                       |  |  |
+|   |  -------------------------  |  |
+|   |                             |  |
+|   -------------------------------  |
+--------------------------------------
+```
+
+### Border
+style有許多可以選擇：none, dotted, inset, solid, dashed, double.
+你可以用border-style來分別指定四個邊的style。
+```
+  border: size style color;
+```
+
+### Margin & Padding
+你可以一次用2個或4個值來表示4周的間隔。
+
+```
+  padding-right: 40px;
+  padding: 20px 30px 0px 50px;
+  margin: 80px 30px;
+```
+
+## Layout
+
+### Display
+主要常用的有
+* none 讓這個element看不到，也不會佔空間。
+* block 這個element會佔用一個block的空間，會自己佔用一行的空間。
+* inline 這個element並不會自己獨占一行，width跟height會無效化。
+* contents 這個element只會佔用contents area的空間。
+* inline-block 這個element並不會自己獨占一行，不過還是會佔用一個block的空間。
+```
+  display: inline-block;
+```
+
+### Float
+float可以用element往某個方向漂浮,直到碰到邊界，或是另一個浮動的element。
+常見的設定有none, left, right, inherit。
+因為浮動element會重新排列附近的element，若希望哪個元素旁邊不要有浮動element，則要加上clear這個屬性。
+```
+  float: right;
+  clear: both;
+```
+
+### Flexbox
+要使用flex box，你要先將他的container的display設成flex。 \
+使用flex-driection來指定flex container裡面element的排列順序。 \
+使用flex-wrap來決定裡面的element要不要換行。 \
+使用justify-content來決定裡面的element要置中左右哪一邊，還有間隔方式。 \
+使用align-items來決定裡面的element要要靠上靠下，還有排列方式。 \
+flex-basis表示這個元素在初始時，佔了多少大小。 \
+flex-grow跟flex-shrink是決定說，當你的空間增加或減少，這個element要以多少的比率變大或變小。 \
+你可以用flex來總結上面三個。 \
+align-self可以用來指定每個element要往哪裡靠。
+
+```
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* flex-end, flex-start, space-between, space-around */
+  align-items: center;
+  /* flex-start, flex-end, baseline, stretch */
+
+  flex-basis: 100px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex: grow shrink basis;
+  align-self: flex-start;
+
+```
+
+
+### Grid
+要使用grid，先將container的display設成grid。
+你可以使用grid-template-columns跟grid-template-rows來訂立有幾個row跟col，還有各自的長度，用auto會平均分配剩下的空間。
+
+grid-column跟grid-rows可以指定要佔用多少欄位，表示為 起始/結束，或是 起始/佔用span。
+grid-area:可以結合上面兩個
+
+```
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 50px 250px;
+  justify-content: space-evenly;
+  /* center, end, start, space-around */
+  align-content: space-between;
+
+  grid-column-gap: 80px;
+  grid-row-gap: 80px;
+  grid-gap: column row;
+
+  grid-column: 1/3;
+  grid-row: 1/span2;
+  grid-area: row-start / column-start / row-size / column-size
+  grid-area: 2 / 1 / span 2 / span 3
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
