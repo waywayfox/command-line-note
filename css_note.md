@@ -4,8 +4,6 @@
 ## link to HTML
 `<link rel="stylesheet" type="text/css" href="../css/style.css">`
 
-
-
 ## Unit
 有分兩種單位，絕對跟相對。
 絕對單位
@@ -307,18 +305,73 @@ grid-area:可以結合上面兩個
 
 ```
 
+## Transition
+使用transition可以讓你指定的property在發生變化時，使用相對應的transition
+你可使用s或ms來指定時間。
+要注意每個瀏覽器所支援的transition不同，若是想要在所有瀏覽器上都可以看到變化，則要加上前綴。
+```
+  transition: property duration function delay;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: background 300ms linear;
+  -m-transition: font-family 1.5s ease 2s;
 
+```
+## Transform
+transform可以讓你對element進行縮放，平移，旋轉，傾斜。
+下面列出一些常見的。
+matric可以讓一次使用多個屬性，不過很難讀，建議不要使用。
+還有它跟transition一樣，你可能會需要加上前綴。
+```
+  transform: trasnlate(120px, 50%);
+  transform: scale(2, 0.5);
+  transform: rotate(0.5turn);
+  transform: scale(0.5) skew(30deg, 20deg);
+  transform: trasnlate(120px, 50%);
+  transform: trasnlate(1, 2, 3, 4, 5, 6);
+```
 
+## Animation
+你可能會覺得要幫所要要動畫的element個別寫transition太麻煩了，那你可以使用animation，只要寫一次，然後就可以apply到你想要的element了。
+首先你要定義keyframe，如果你只有兩個狀態，你可以使用from跟to就好，如果你想更明確的指定每個階段的狀態，可以用百分比。
+```
+@keyframes red-to-black {
+  from {
+    background: red;
+  }
 
+  to {
+    background: black;
+  }
 
+  0% {
+    background: red;
+    translate(0px, 0px);
+  }
 
+  50% {
+    background: yellow;
+    translate(20px, 20px);
+  }
 
+  100% {
+    background: black;
+    translate(40px, 40px);
+  }
+}
+```
 
+接下來，你需要把keyframe assign給element，然後設定這些東西，你可以用animation總結6種property。
+你一樣需要注意瀏覽器有沒有支援。
+```
+  animation-name: red-to-black; /* 指定keyframe */
+  animation-duration: 10s; /* 動畫時間 */
+  animation-timing-function: ease-in-out;
+  animation-delay: 2s;
+  animation-iteration-count: infinite; /* 重複次數 */
+  animation-direction: reverse; /* 方向 */
+  animation: red-to-black 4s linear 0s 2 reverse
 
-
-
-
-
+```
 
 
 
