@@ -282,6 +282,7 @@ align-self可以用來指定每個element要往哪裡靠。
 ### Grid
 要使用grid，先將container的display設成grid。
 你可以使用grid-template-columns跟grid-template-rows來訂立有幾個row跟col，還有各自的長度，用auto會平均分配剩下的空間。
+假如你需要很多行，可以用repeat來定義，更可以搭配minmax來定義最小最大，這樣可以達成自動根據螢幕大小改變行數。
 
 grid-column跟grid-rows可以指定要佔用多少欄位，表示為 起始/結束，或是 起始/佔用span。
 grid-area:可以結合上面兩個
@@ -290,6 +291,8 @@ grid-area:可以結合上面兩個
   display: grid;
   grid-template-columns: auto auto auto;
   grid-template-rows: 50px 250px;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   justify-content: space-evenly;
   /* center, end, start, space-around */
   align-content: space-between;
