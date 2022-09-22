@@ -130,3 +130,39 @@ git checkout HEAD -- <path/of/file>
 
 `git stash clear`
 刪除所有儲存的修改
+
+## git show
+讓你可以檢視
+
+
+
+## Git 小知識
+
+### Git Object
+
+每個git object都有一個名字，他是一個經過SHA1 hash過的40字元的英數字。
+運用這個object name，git就可以快速的辨別這是否是同一個object。
+
+除了名字外，每個git object還有另外三個properties，分別是type, size跟conetent。
+size基本上就是content的大小。
+type 分成4種
+* blob 基本上就是file
+* tree 基本上就是directory
+* commit 指向一個tree，並紀錄著這個時間點它長什麼樣子，裡面包含一些meta-data，像是時間，作者，還有前一個commit等等。
+* tag 用來標註某個commit是特別的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
