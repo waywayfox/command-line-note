@@ -113,6 +113,11 @@ git checkout HEAD -- <path/of/file>
 `git diff <branch>`
 查看目前的HEAD 跟<branch>之前的差異。
 
+
+-M[n] --find-rename
+可以檢測這個檔案算不算rename，預設是50%，代表50％以上的文件沒有被改變就算是rename。
+`git diff -M50%`
+
 ## git config
 
 ## git submodule
@@ -132,8 +137,24 @@ git checkout HEAD -- <path/of/file>
 刪除所有儲存的修改
 
 ## git show
-讓你可以檢視
+讓你可以檢視某個git object。
 
+`git show <object name>`
+
+-s --no-patch 不會顯示diff的部分。
+`git show -s --pretty=raw <object name>`
+
+
+
+## git ls-files
+顯示所有被git追蹤的檔案。
+可以在後面加上--來搜尋符合特定pattern的檔案。
+`git ls-files -- *.c`
+
+
+##git ls-tree
+可以顯示某次commit時git object的狀態，包含權限，object名稱，檔案名稱等等。
+`git ls-tree <commit>`
 
 
 ## Git 小知識
@@ -151,15 +172,50 @@ type 分成4種
 * commit 指向一個tree，並紀錄著這個時間點它長什麼樣子，裡面包含一些meta-data，像是時間，作者，還有前一個commit等等。
 * tag 用來標註某個commit是特別的。
 
+#### Blob
+Blob主要是用來儲存檔案中的資料，你可以用git show來顯示某個blob的資料，blob並不會儲存除了內容外的資料，
+就連檔名也不會，所以若是兩個檔案的內容完全相同，他們會共用同個blob。
+```
+git ls-tree -r HEAD
+100644 blob 943729d796099ba5b52d142497de5e66b3a65e05    asuka
+100644 blob 943729d796099ba5b52d142497de5e66b3a65e05    dir1/fina
+100644 blob 943729d796099ba5b52d142497de5e66b3a65e05    fuuka
+```
 
+#### Tree
+tree放著一堆指向blob跟其他tree的pointer，跟blob一樣，假如兩個tree裡面的內容完全一樣的話，他們會共用同一個sha name。
+```
+ git ls-tree HEAD
+100644 blob 943729d796099ba5b52d142497de5e66b3a65e05    asuka
+040000 tree b45716dbb44fce0b55e1b3b12e701dcec9e38d5c    dir1
+040000 tree b45716dbb44fce0b55e1b3b12e701dcec9e38d5c    dir2
+100644 blob 943729d796099ba5b52d142497de5e66b3a65e05    fuuka
 
+# 修改dir2裡面的一個檔案的內容後
+git ls-tree HEAD
+100644 blob 943729d796099ba5b52d142497de5e66b3a65e05    asuka
+040000 tree b45716dbb44fce0b55e1b3b12e701dcec9e38d5c    dir1
+040000 tree da41193f082710a8b63f7f99e952214715af3121    dir2
+100644 blob 943729d796099ba5b52d142497de5e66b3a65e05    fuuka
+```
 
+#### Commit
+commit紀錄著一個tree的狀態。commit並不是紀錄所有改變，而是透過比較跟其parent的那個commit的tree進行比較來得出是否有改變。
+```
+git show -s --pretty=raw 359ebe6d912c8fdad1c39beb6b70af82a14f3ff8
+commit 359ebe6d912c8fdad1c39beb6b70af82a14f3ff8
+tree ddc18e433adab842e7a58aaff2e2004c9ab9df7b
+parent 9d241a7e1b0cb861c61c4fe94f0e028055dbb6ed
+author David.CW.Lu <David.CW.Lu@liteon.com> 1664513986 +0800
+committer David.CW.Lu <David.CW.Lu@liteon.com> 1664513986 +0800
 
-
-
-
-
-
+    test5
+```
+tree: tree的狀態。
+parent: 前一個commit的SHA1名稱，可能會有多個(merge的狀況)，或是0個，被稱為root commit，通常每個repository至少會有一個root commit。
+author: 負責這個commit的人。
+committer: 實際創建這個commit的人。
+comment: 這個commit的敘述。
 
 
 
