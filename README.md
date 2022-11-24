@@ -136,6 +136,16 @@ git checkout HEAD -- <path/of/file>
 `git stash clear`
 刪除所有儲存的修改
 
+
+## git tag
+`git tag` 列出所有tag
+查到你想看的tag之後可以用git show來查看相對應的commit。
+
+加入的tag會被記錄在refs/tags/裡面。
+
+
+-f 強制創建tag，如果舊有的tag存在的話會覆蓋掉之前的。
+
 ## git show
 讓你可以檢視某個git object。
 
@@ -217,6 +227,11 @@ author: 負責這個commit的人。
 committer: 實際創建這個commit的人。
 comment: 這個commit的敘述。
 
+### Tag
+tag通常會指向一個commit，她會紀錄commit的名稱，tag的名稱，tag的製作人跟tag的說明。
+```
+git cat-file tag v1.5.0
+```
 
 
 
