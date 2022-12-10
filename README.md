@@ -1,5 +1,25 @@
 # 維維狐的git小筆記
 
+## git help
+你可以透過下面指令來查閱git的幫助文件。
+```
+git help <verb>
+git <verb> --help
+man git-<verb>
+
+git help config
+```
+如果你只想要一些簡單的usage，使用-h就好
+`git add -h`
+
+## git init
+你可以把一個現有的directory納入git的管理下，只要你在那個directory下這樣做。
+`git init`
+
+## git clone
+從某個server將repository載下來，你可以加上dir如果你不想要clone下來的repository跟它設定的名字一樣。
+`git clone <url> [<dir>]`
+
 ## git status
 
 ## git commit
@@ -119,6 +139,48 @@ git checkout HEAD -- <path/of/file>
 `git diff -M50%`
 
 ## git config
+
+git的config有分成3個層級，system, global, 跟local。
+system的設定會apply到所有user上面，global只影響特定user，而local只在當前的repository發生作用。
+每一層的設定都會被下一層所覆蓋。
+
+### system
+你可以加上--system，就可以讀寫system的
+設定，當然你需要有權限才行。
+
+
+### global
+通常放在~/.gitconfig或是~/.config/git/config，你可以加上--globla來讀寫global的設定。
+
+
+### local
+git config是預設的選項。
+放在repository裡面的.git/config，你可以加上--local來讀寫global的設定。
+
+
+###查詢config
+你可以單純查詢某個proeprety。
+`git config user.name`
+或是全部列出來，顯示你的設定跟他們是哪一層級，你不加show --show-origin就只會列出來而已。
+`git  config --list --show-origin`
+
+
+最初你開始使用時，你一定要設定你的名字跟email才行
+```
+git config --global user.name "waywayfox"
+git config --global user.email "waywayfox@example.com"
+```
+
+設定文字編輯器，基本上支援蠻多的，有些需要特殊的flag，可以上網查。
+```
+git config --global core.editor emacs
+```
+
+設定default的branch name，像是github是使用main當作default。
+`git config --global init.defaultBranch main`
+
+
+
 
 ## git submodule
 
