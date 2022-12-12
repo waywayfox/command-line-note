@@ -79,6 +79,17 @@
 回復單一檔案或資料夾到之前的版本
 git checkout HEAD -- <path/of/file>
 
+切換到github的pull request，你要先檢查那個pull request的ID，就是在#後面的數字，然後BRANCH_NAME選擇你想在local
+注意head是小寫。
+```
+git fetch origin pull/ID/head:BRANCH_NAME
+git checkout BRANCH_NAME
+
+git fetch origin pull/24/head:test_branch
+git checkout test_branch
+```
+
+
 ## git branch
 
 `git branch` 查看所有的分支跟目前所在的分支
