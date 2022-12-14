@@ -21,6 +21,44 @@ git help config
 `git clone <url> [<dir>]`
 
 ## git status
+git 的所有檔案有兩種狀態，untracked跟tracked，untracked代表這個檔案並沒有在repository裡面，也可以說這個檔案並沒有前一個版本的紀錄。
+而tracked則有三個階段，unmodified，modified跟staged。
+你可以使用這個指令來查看現在repository的狀態。
+你可以在後面加上--short或-s來顯示簡單的狀態，他會有兩列，左邊是stage area，右邊是working area。
+
+
+## ignore file
+通常有會有一些你絕對不想追蹤的檔案出現，例如node_module或是build產生的一些.o檔，你可以在repository下建立一個.gitignore。
+在簡單的狀況下你可能只會有一個.gitignore，但是專案一大之後，你可能會想要在個別的資料夾下設定各自的.gitignore。
+大部分情況你可以在網路找到你的語言所需要的ignore file，不過如果你想自己寫的話，
+下面是一些簡單的語法
+使用\#當作comment
+預設上這個他會對每個規則遞迴到每個資料夾。
+在最前面加上\\表示不需要遞迴執行這項規則。
+在最後面加上\\表示這規則是個資料夾。
+使用**可以表示巢狀的資料夾
+
+使用!來進行逆向指定。
+下面附上gitpro裡面的範例。
+```
+# ignore all .a files
+*.a
+# but do track lib.a, even though you're ignoring .a files above
+!lib.a
+# only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+# ignore all files in any directory named build
+build/
+# ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+# ignore all .pdf files in the doc/ directory and any of its subdirectories
+doc/**/*.pdf
+
+```
+
+## git add
+當你剛clone一個repository下來時，所有檔案都是tracked跟unmodified的，當你改動檔案，這個檔案就是modified，而當你add一個檔案，它就會變成staged狀態，代表說你打算把這個檔案記錄在下一個版本中。
+git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個檔案標記為resolve。當你下了git add這個指令，代表你想把這個瞬間這個檔案的樣子記錄下來，放進歷史的紀錄中。
 
 ## git commit
 
@@ -109,7 +147,6 @@ git fetch origin pull/24/head:test_branch
 git checkout test_branch
 ```
 
-
 ## git branch
 
 `git branch` 查看所有的分支跟目前所在的分支
@@ -140,10 +177,13 @@ git checkout test_branch
 使用Interactive mode進行刪除。
 
 ## git diff
+用來查看目前的改動跟之前的改動有什麼差別。
 
 `git diff <branch>`
 查看目前的HEAD 跟<branch>之前的差異。
 
+`git diff --staged/--cached`
+查看當前staged的改動部分。
 
 -M[n] --find-rename
 可以檢測這個檔案算不算rename，預設是50%，代表50％以上的文件沒有被改變就算是rename。
