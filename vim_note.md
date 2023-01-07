@@ -46,6 +46,9 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 可在後面加ia
 有幾種folding的方式，請參考folding或是vim script的部份。
 
+zo 開啟
+zc 關閉
+
 ## tab and windows
 `:new`
 `vnew` 開啟空的分割視窗。
