@@ -216,16 +216,16 @@ karen::
 
 ```
 
-** include **
+**include**
 你可以使用include來讀取其他makefile的資料。
 ```
 include filename
 ```
 
-** .DELETE\_ON\_ERROR **
+**.DELETE\_ON\_ERROR**
 若是在一開始加上.DELETE\_ON\_ERROR，它會刪除這次建立的那些target。
 
-** vpath **
+**vpath**
 假如你的檔案放在別的目錄，你可以使用vpath這東西來幫你自動找到你的檔案，
 使用方法如下，vpath pattern directory
 要注意，你不能在recipi寫死你的路徑，不然它會無法幫你自動轉換。
@@ -322,7 +322,7 @@ makefile裡面的function基本上是用來處理字串的。
 要注意空格，因為空格也會被當作一格字元，不會被省略。
 
 下面有一些常用的function
-** $(foreach VAR,LIST,TEXT) **
+**$(foreach VAR,LIST,TEXT)**
 
 foreach非常方便，可以將你指定的list展開成你想要的樣子，
 下面的例子會把SRC\_DIR裡面的路徑一個一個放入dir去loop，最後產生.各個路徑的.c檔的pattern，讓wildcard去處理所有.c檔。
@@ -333,16 +333,16 @@ C_FILE=$(wildcard $(foreach dir,$(SRC_DIR), $(dir)/*.c))
 
 ```
 
-** $(subst <from>,<to>,<text) **
+**$(subst <from>,<to>,<text)**
 字符替換
 
-** $(patsubst <pattern>,<replacement>,<text>) **
+**$(patsubst <pattern>,<replacement>,<text>)**
 pattern 替換
 
-** $(notdif <name...>) **
+**$(notdif <name...>)**
 拿掉path，只留下檔名。
 
-** $(wildcard pattern...) **
+**$(wildcard pattern...)**
 找到所有符合pattern的檔案。
 
 其他假如哪天我用到再補。
@@ -351,7 +351,7 @@ pattern 替換
 
 
 
-** 定義function **
+**定義function**
 ```
 info_fn = name: $(1), age: $(2), cuteness: $(3)
 
@@ -360,13 +360,15 @@ print:
 ```
 
 
-** shell **
+**shell**
 會使用shell來執行指令，不過會移除newline，所可能跟平常得到的結果不太一樣。
 ```
 echo $(shell ls -al)
-``` makefile
-** Example **
 ```
+
+**Example**
+
+``` makefile
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC := final_program
 
