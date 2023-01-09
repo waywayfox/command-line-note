@@ -66,8 +66,7 @@ int main() {
 `gcc -Wall -E asuka.c -o asuka.i`
 
 #### compilation
-在這個階段，會將剛才pre-processing的.i檔轉換成組合語言，它又分成scan, parsing, semantic analysis, source code optimization。
-scan會把程式碼裡的所有東西分成不同的token, 像是keyword, variable, operator。
+在這個階段，會將剛才pre-processing的.i檔轉換成組合語言，它又分成scan, parsing, semantic analysis, source code optimization。 scan會把程式碼裡的所有東西分成不同的token, 像是keyword, variable, operator。
 parsing會把剛才得到的那些token組合成適當的syntax tree。
 semantic analysis會分析這個syntax tree是否正確。
 source code optimization 會根據你的設定跟編譯器進行optimize。
@@ -347,10 +346,6 @@ pattern 替換
 
 其他假如哪天我用到再補。
 
-
-
-
-
 **定義function**
 ```
 info_fn = name: $(1), age: $(2), cuteness: $(3)
@@ -423,6 +418,24 @@ clean:
 
 
 ### GDB (GNU debugger)
+
+
+
+
+
+
+## CMake
+
+CMake是一套可以自動產生makefile的系統，他會根據你所定義的CMakeLists.txt這個檔案所定義的規則建立build system。
+
+常用指令
+cmake\_minimum\_required(VERSION 3.5.1)定義最低需求的版本。
+project(Asuka VERSION1.0) 定義project名稱跟版本，這個定義會被存在PROJECT\_NAME之中。
+add\_library(mylib ${mylib\_sources}) 建立lib。
+add\_executable(myexec ${myexec\_sources}) 建立執行檔。
+target\_link\_libraries(myexec mylib)
+install(DESTINATION、PERMISSIONS、CONFIGURATIONS、COMPONENT) 設定安裝路徑還有一些其他設定。
+
 
 
 

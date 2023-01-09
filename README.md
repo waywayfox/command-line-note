@@ -28,7 +28,7 @@ git 的所有檔案有兩種狀態，untracked跟tracked，untracked代表這個
 
 
 ## ignore file
-通常有會有一些你絕對不想追蹤的檔案出現，例如node_module或是build產生的一些.o檔，你可以在repository下建立一個.gitignore。
+通常有會有一些你絕對不想追蹤的檔案出現，例如node\_module或是build產生的一些.o檔，你可以在repository下建立一個.gitignore。
 在簡單的狀況下你可能只會有一個.gitignore，但是專案一大之後，你可能會想要在個別的資料夾下設定各自的.gitignore。
 大部分情況你可以在網路找到你的語言所需要的ignore file，不過如果你想自己寫的話，
 下面是一些簡單的語法

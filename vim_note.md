@@ -16,7 +16,7 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 這樣可以搜尋你要的pattern，有更多匹配模式可以查magic。
 `/<pattern>`
 
-若是你要取代一些東西，可以查usr_12.txt
+若是你要取代一些東西，可以查usr\_12.txt
 最基礎的方式是這樣，%代表所有行，flag放g的話，就能替換所有行裡所有match的部份了。
 ```
 :%s/<origin pattern>/<replace pattern>/<flag>
@@ -30,7 +30,7 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 搜尋使用
 `:h keyword`
 
-若是你的快捷鍵並不是在normal mode下，在前面加上<mode>_<shortcut>
+若是你的快捷鍵並不是在normal mode下，在前面加上<mode>\_<shortcut>
 `:h i_CTRL-O`
 `CTRL-]` 跳轉到當前游標所在的關鍵字
 `CTRL-o` 跳到上一個地方
