@@ -221,7 +221,7 @@ karen::
 include filename
 ```
 
-**.DELETE\_ON\_ERROR**
+**.DELETE_ON_ERROR**
 若是在一開始加上.DELETE\_ON\_ERROR，它會刪除這次建立的那些target。
 
 **vpath**
@@ -435,7 +435,6 @@ add\_library(mylib ${mylib\_sources}) 建立lib。
 add\_executable(myexec ${myexec\_sources}) 建立執行檔。
 target\_link\_libraries(myexec mylib)
 install(DESTINATION、PERMISSIONS、CONFIGURATIONS、COMPONENT) 設定安裝路徑還有一些其他設定。
-
 
 
 

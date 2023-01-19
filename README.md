@@ -60,10 +60,27 @@ doc/**/*.pdf
 當你剛clone一個repository下來時，所有檔案都是tracked跟unmodified的，當你改動檔案，這個檔案就是modified，而當你add一個檔案，它就會變成staged狀態，代表說你打算把這個檔案記錄在下一個版本中。
 git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個檔案標記為resolve。當你下了git add這個指令，代表你想把這個瞬間這個檔案的樣子記錄下來，放進歷史的紀錄中。
 
+## git reset
+當你想要將在stage狀態的檔案恢復到原來的狀態，你可以使用reset。
+在2.23.00版之後改成restore
+
+`git reset HEAD <file>`
+將檔案從stage狀態移除，不會改動你的修改。
+
+`git reset --hard`
+假如你使用--hard，不僅檔案會被移出stage狀態，還會將檔案恢復到指定commit的狀態。
+
+
 ## git commit
 
 `git commit --amend`
 更改上一次的commit。
+
+`git commit -m <message>`
+使用單行作為commit的message。
+
+`git commit -a -m <message>`
+假如你真的很懶，你可以加上-a，這樣他就會把所有已經track的檔案stage之後commit。
 
 ## git log
 
@@ -78,8 +95,19 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 `git log -p`
 顯示commit 中每個文件所作的改動
 
+`git log --stat`
+顯示commit中改動的檔案跟行數。
+
+`git log -- <path>`
+只顯示有改動到path下的commit。
+
 `git log --oneline`
-只顯示commit中的標題跟SSH碼
+只顯示commit中的標題跟SHA碼
+
+`git log --pretty=format:"<format>"`
+你可以使用format來自訂輸出的格式。
+例如
+`git log --pretty=format:"%h - %an, %ar : %s"`
 
 `git log --name-status` 顯示新增、更動、刪除的檔案列表。
 
@@ -90,11 +118,35 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 用來找出檔案中特定名稱的function的commit
 例如：git log -L :myfunction:path/to/myfile.c
 
+`git log -S function_name`
+查詢某個有改動某字串的commit。
+
+`git log --all --decorate --oneline --graph`
+簡單印出還不錯的log。
+
+`git log --since=<date> --until=<date>`
+指定時間
+
+
+## git pickaxe
+
 ## git rebase
 
 `git rebase -i <sha1>`
 對現在到目標commit之間的commit進行挑選和位置排列
 
+## git fetch
+`git fetch <remote>`
+從remote抓取你local沒有的資料。
+
+
+## git merge
+
+`git merge --no-ff <branch>`
+不使用fast forward，在master為最新版本時，一般狀況merge會把所有branch的commit拉到master，這時可以使用--no-ff在merge時合併整個branch的commit，變回原本merger的情況。
+
+`git merge --squash <branch>`
+使用squash的方式合併，合併所有branch上的commit，疊加在目前所在的分支上，產生像是合併完的結果，但並不會產生新的commit，需要自己手動產生新的commit，
 
 ## git pull
 
@@ -106,25 +158,42 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 `git pull --rebase`
 將目前remote端的拉下之後，並使用rebase的方式，本地端的修改會被疊加到拉下來的修改上，且不會產生新的merge commit。
 
-## git merge
-
-`git merge --no-ff <branch>`
-不使用fast forward，在master為最新版本時，一般狀況merge會把所有branch的commit拉到master，這時可以使用--no-ff在merge時合併整個branch的commit，變回原本merger的情況。
-
-`git merge --squash <branch>`
-使用squash的方式合併，合併所有branch上的commit，疊加在目前所在的分支上，產生像是合併完的結果，但並不會產生新的commit，需要自己手動產生新的commit，
-
+`git config --global pull.rebase "true"`
+假如你想要你的pull預設就是使用rebase，可以對pull.rebase進行設定。
 
 ## git push
+
+`git push <remote> <branch>`
+最基礎的用法預設是origin跟master。
 
 `git push origin :<branch>`
 使用空的分支替代remote端的分支，等同於刪掉remote上的branch。
 
+`git push --tags`
+注意你的tag不會順便推上去，你要加上--tags，或者你也可以單獨推某個tag。
+
+`git push <remote> :refs/tags/<tagname>`
+`git push origin --delete <tagname>`
+刪掉remote tag的方式跟branch相同，用空的tag代替原有的。
+
 ## git remote
 `git remote -v` 查看目前remote端的路徑
 
+`git remote add <name> <url>`
+增加新的remote。
+
+`git remote rename <oldname> <newname>`
+增加新的remote。
+
+`git remote remove <name>`
+增加新的remote。
+
 `git remote set-url origin <remote>`
 若是你remote的repository有改名稱，或是你存放的遠端路徑有改變，使用這一條更改。
+
+`git remote show <remote>`
+查看remote的狀態。
+
 
 ## git checkout
 讓自己本地端的修改 疊在遠端的版本
@@ -136,6 +205,7 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 
 回復單一檔案或資料夾到之前的版本
 git checkout HEAD -- <path/of/file>
+之後改成restore了。
 
 切換到github的pull request，你要先檢查那個pull request的ID，就是在#後面的數字，然後BRANCH_NAME選擇你想在local
 注意head是小寫。
@@ -147,12 +217,21 @@ git fetch origin pull/24/head:test_branch
 git checkout test_branch
 ```
 
+` git checkout <tag> `
+你可以使用checkout切換到tag的位置，不過你改動並不會被記錄在detach head上，如果妳想保存改動，記得要使用-b真的創建一個branch。
+
 ## git branch
 
 `git branch` 查看所有的分支跟目前所在的分支
 `git branch -m <name>` 改變現在所在分支的名稱
 
+## git mv
+如果你要移動檔案或重新命名的話可以使用這個。
+
 ## git rm
+
+`git rm <filename>`
+刪掉檔案並把刪除加到stage階段。
 
 `git rm --cached <filename>`
 把staged的檔案從stage的階段刪掉，還會保留檔案。
@@ -195,6 +274,7 @@ git的config有分成3個層級，system, global, 跟local。
 system的設定會apply到所有user上面，global只影響特定user，而local只在當前的repository發生作用。
 每一層的設定都會被下一層所覆蓋。
 
+
 ### system
 你可以加上--system，就可以讀寫system的
 設定，當然你需要有權限才行。
@@ -230,7 +310,7 @@ git config --global core.editor emacs
 設定default的branch name，像是github是使用main當作default。
 `git config --global init.defaultBranch main`
 
-
+### Git Aliases
 
 
 ## git submodule
@@ -258,6 +338,29 @@ git config --global core.editor emacs
 
 
 -f 強制創建tag，如果舊有的tag存在的話會覆蓋掉之前的。
+
+`git tag -l <pattern>`
+使用pattern來搜尋tag。
+
+`git tag <tag>`
+創建lightweight tag，你不能給她-a,-m,-s等等flag不然他會創建成annoted。
+
+`git tag -a <tag>`
+創見annoted tag
+
+`git tag -m <message>`
+加上message。
+
+`git tag -s <sign>`
+指定GPG的方式。
+查詢tag.gpgSign獲得更多資料。
+
+`git tag -a v1.2 9fceb02`
+假如你想為過去的commit加上tag，只要在後面加上他的SHA碼就好。
+
+`git tag -d <tag>`
+刪掉tag。
+
 
 ## git show
 讓你可以檢視某個git object。
@@ -345,7 +448,9 @@ tag通常會指向一個commit，她會紀錄commit的名稱，tag的名稱，ta
 ```
 git cat-file tag v1.5.0
 ```
-
+tag分成兩種，lightweight跟annotated。
+lightweight有點像是不會前進的branch，只是單純指向某個commit。
+annotated就紀錄更多東西，而且會存進git的database中，通常會建議你使用annotated，因為他有更多資料。
 
 
 
