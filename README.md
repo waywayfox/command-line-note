@@ -109,6 +109,9 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 例如
 `git log --pretty=format:"%h - %an, %ar : %s"`
 
+`git log --decorate`
+會顯示branch指在哪個commit。
+
 `git log --name-status` 顯示新增、更動、刪除的檔案列表。
 
 `git log --follow <file name/directory name>`
@@ -196,6 +199,11 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 
 
 ## git checkout
+`git checkout <branch>`
+切換branch。
+
+
+
 讓自己本地端的修改 疊在遠端的版本
 
     git checkout <remote branch>
@@ -221,6 +229,9 @@ git checkout test_branch
 你可以使用checkout切換到tag的位置，不過你改動並不會被記錄在detach head上，如果妳想保存改動，記得要使用-b真的創建一個branch。
 
 ## git branch
+
+`git branch <name>`
+創建新的branch，並指向HEAD，注意你只是創建了它，你還必須checkout到它才行。
 
 `git branch` 查看所有的分支跟目前所在的分支
 `git branch -m <name>` 改變現在所在分支的名稱
@@ -311,6 +322,18 @@ git config --global core.editor emacs
 `git config --global init.defaultBranch main`
 
 ### Git Aliases
+你可以跟shell一樣設定git所使用的alias
+```
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status
+
+git config --global alias.unstage 'reset HEAD --'
+git config --global alias.last 'log -1 HEAD'
+git config --global alias.glog 'log --all --decorate --oneline --graph'
+```
+
 
 
 ## git submodule
