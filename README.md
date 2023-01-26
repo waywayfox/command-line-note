@@ -20,6 +20,11 @@ git help config
 從某個server將repository載下來，你可以加上dir如果你不想要clone下來的repository跟它設定的名字一樣。
 `git clone <url> [<dir>]`
 
+`git clone -o asuka`
+一般來說預設的remote name是origin，你可以用-o來指定你要的名字，像這個你的remote default就會是asuka/master。
+
+
+
 ## git status
 git 的所有檔案有兩種狀態，untracked跟tracked，untracked代表這個檔案並沒有在repository裡面，也可以說這個檔案並沒有前一個版本的紀錄。
 而tracked則有三個階段，unmodified，modified跟staged。
@@ -142,14 +147,34 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 `git fetch <remote>`
 從remote抓取你local沒有的資料。
 
+`git fetch --all`
+抓所有remote的資料。
+
 
 ## git merge
+
+`git merge <branch>`
+
+將branch 合到當前的HEAD。
+
+git 裡面有被稱作upstream的pointer，它指向remote的一個與當前branch相對應的branch，
+最常見的就是master跟origin/master，不過你可以對不同的branch設定upstream。
+在git 中有個間單的寫法表示upstream，叫做@{upstream}或是@{u}，所以你可以這樣用。
+`git merge @{u}`
+假如你在master它就等同於
+`git merge origin/master`
+
 
 `git merge --no-ff <branch>`
 不使用fast forward，在master為最新版本時，一般狀況merge會把所有branch的commit拉到master，這時可以使用--no-ff在merge時合併整個branch的commit，變回原本merger的情況。
 
 `git merge --squash <branch>`
 使用squash的方式合併，合併所有branch上的commit，疊加在目前所在的分支上，產生像是合併完的結果，但並不會產生新的commit，需要自己手動產生新的commit，
+
+`git mergetool`
+假如你想要有圖形化的界面來解決merge conflict，你可以用這個，不過有時候會要做些別的設定。
+
+
 
 ## git pull
 
@@ -176,7 +201,7 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 注意你的tag不會順便推上去，你要加上--tags，或者你也可以單獨推某個tag。
 
 `git push <remote> :refs/tags/<tagname>`
-`git push origin --delete <tagname>`
+`git push origin --delete <tagname/branch>`
 刪掉remote tag的方式跟branch相同，用空的tag代替原有的。
 
 ## git remote
@@ -202,6 +227,7 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 `git checkout <branch>`
 切換branch。
 
+在2.23版之後，你也可以使用git switch來切換branch的功能。
 
 
 讓自己本地端的修改 疊在遠端的版本
@@ -228,13 +254,29 @@ git checkout test_branch
 ` git checkout <tag> `
 你可以使用checkout切換到tag的位置，不過你改動並不會被記錄在detach head上，如果妳想保存改動，記得要使用-b真的創建一個branch。
 
+`git checkout --track <remote>/<branch>`
+切換到remote的某個branch，並在local建立一個相同名稱的branch，
+通常你不加track的話它也會去找你remote有沒有同名稱的branch，用在你有多個remote的情況下。
+
+
+
 ## git branch
 
 `git branch <name>`
 創建新的branch，並指向HEAD，注意你只是創建了它，你還必須checkout到它才行。
 
+`git branch --merged/--no-merged`
+顯示當前的branch跟有無被merge到這個branch的其他branch。
+
 `git branch` 查看所有的分支跟目前所在的分支
-`git branch -m <name>` 改變現在所在分支的名稱
+`git branch --all` 查看所有branch，包括remote的。
+`git branch -vv` 查看所有branch，還有他們各自的upstream。
+
+`git branch -m <name>` 改變現在所在分支的名稱，記得你只是改了local的名稱，記得要push。
+`git branch -d <name>` 刪除branch。
+
+
+
 
 ## git mv
 如果你要移動檔案或重新命名的話可以使用這個。
@@ -320,6 +362,10 @@ git config --global core.editor emacs
 
 設定default的branch name，像是github是使用main當作default。
 `git config --global init.defaultBranch main`
+
+`git config credential.helper`
+假如你不想要一直打密碼，你可以使用credential相關的設定，或是直接用SSH。
+
 
 ### Git Aliases
 你可以跟shell一樣設定git所使用的alias

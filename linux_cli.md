@@ -1,5 +1,27 @@
 # 維維的linux command line 小筆記
 
+## hot key
+
+ctrl + 左右鍵 移動到上下一個字
+ctrl + a/e 移動到最前或最後
+ctrl + h 刪除一個字
+ctrl + u/k 刪除當前位置之前之後的所有東西
+ctrl + y 貼上你剛才刪掉的東西
+ctrl + l 清除畫面，跟clear一樣
+ctrl + s/q 暫停，繼續畫面，好像是在遠古時代，電腦的ram不足以支撐整個螢幕的字，
+所以需要暫停繼續來控制對方送過來的資料量。
+
+
+ctrl + shift + t 新tab
+ctrl + shift + w 關掉tab
+alt 切換tab
+
+
+alt + f10 最大化視窗
+alt + f9 最小化視窗
+alt + f4  關掉視窗
+
+
 ## ls
 -l 顯示詳細資訊 \
 -a 顯示隱藏檔 \
