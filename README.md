@@ -150,6 +150,43 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 `git fetch --all`
 抓所有remote的資料。
 
+`git rebase --onto <target> <from> <to>`
+有很很神奇的用法，可以將from之後1個commit到to之間的commit接到target的部份
+下面我有個fina1~3跟fuuka1~3兩個branch，我想把fina12接到fuuka1後面。
+所以我就下了`git rebase --onto 40ed5f0 f045302 a6035be`
+可以看到結果，從fuuka1後面在長出了一個branch，就是我們要接的fina12，但是因為這像操作，所以fina3消失了。
+在進行這個指令時要小心有些commit斷頭。
+```
+ git glog
+* ddf91a3 (HEAD -> fina) fina3
+* a6035be fina2
+* e017a1b fina1
+| * c534949 (fuuka) fuuka3
+| * 89f7559 fuuka2
+| * 40ed5f0 fuuka1
+|/
+* f045302 (master) asuka3
+* 2104068 asuka2
+* c84b920 init
+lu@lu-VirtualBox:~/Documents/git_test$ git rebase --onto 40ed5f0 f045302 a6035be
+First, rewinding head to replay your work on top of it...
+Applying: fina1
+Applying: fina2
+lu@lu-VirtualBox:~/Documents/git_test$ git glog
+* d2aa0ff (HEAD) fina2
+* da36599 fina1
+| * c534949 (fuuka) fuuka3
+| * 89f7559 fuuka2
+|/
+* 40ed5f0 (fina) fuuka1
+* f045302 (master) asuka3
+* 2104068 asuka2
+* c84b920 init
+lu@lu-VirtualBox:~/Documents/git_test$ git glog | grep fina3
+lu@lu-VirtualBox:~/Documents/git_test$
+
+```
+
 
 ## git merge
 
