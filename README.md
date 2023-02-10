@@ -45,20 +45,20 @@ git 的所有檔案有兩種狀態，untracked跟tracked，untracked代表這個
 
 使用!來進行逆向指定。
 下面附上gitpro裡面的範例。
-```
-# ignore all .a files
-*.a
-# but do track lib.a, even though you're ignoring .a files above
-!lib.a
-# only ignore the TODO file in the current directory, not subdir/TODO
-/TODO
-# ignore all files in any directory named build
-build/
-# ignore doc/notes.txt, but not doc/server/arch.txt
-doc/*.txt
-# ignore all .pdf files in the doc/ directory and any of its subdirectories
-doc/**/*.pdf
 
+```
+// ignore all .a files
+*.a
+// but do track lib.a, even though you're ignoring .a files above
+!lib.a
+// only ignore the TODO file in the current directory, not subdir/TODO
+/TODO
+// ignore all files in any directory named build
+build/
+// ignore doc/notes.txt, but not doc/server/arch.txt
+doc/*.txt
+// ignore all .pdf files in the doc/ directory and any of its subdirectories
+doc/**/*.pdf
 ```
 
 ## git add
@@ -121,6 +121,9 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 
 `git log --follow <file name/directory name>`
 顯示除了改名之外有更改過這個檔案的commit。
+
+`git log --full-history -- <dir/filename>`
+查詢所有有關這個檔案的commit，包含刪除。
 
 `git log -L start,end:file`
 用來找出檔案中特定名稱的function的commit
@@ -358,6 +361,9 @@ git checkout test_branch
 可以檢測這個檔案算不算rename，預設是50%，代表50％以上的文件沒有被改變就算是rename。
 `git diff -M50%`
 
+`git diff --check`
+查看有沒有多餘的空白在你修改的後面
+
 ## git config
 
 git的config有分成3個層級，system, global, 跟local。
@@ -413,6 +419,7 @@ git config --global alias.ci commit
 git config --global alias.st status
 
 git config --global alias.unstage 'reset HEAD --'
+git config --global alias.kaifuku 'checkout HEAD --'
 git config --global alias.last 'log -1 HEAD'
 git config --global alias.glog 'log --all --decorate --oneline --graph'
 ```

@@ -170,9 +170,69 @@ s socket檔
 查看硬碟使用量
 
 ## awk
-文本處理
+awk是用來做文本處理的一個command，他可以普通的使用command輸入，也可以寫awk專用的script來處理。
+舉例來說，這是最簡單的使用方式，每讀到一行，就把第3跟第4個column的資料印出來，中間夾一個tab。
+`awk '{print $3 "\t" $4}'`
 
--F 指定分隔符
+你可以使用/<expr>/來訂立每個符合的條件的行要做出什麼動作。
+這個就是查詢所有包含a的row，例外他預設的行為就是把整行印出來，所以下面兩行的行為是一樣的。
+`awk '/a/ {print $0}'`
+`awk '/a/'`
+
+你可以用BEGIN跟END來指定開始讀跟讀完整個檔案要做的事，也可以定義變數。
+這一行做的是，當它找到含有a的row就把cnt加1，結束時印出cnt。
+`awk '/a/{++cnt} END {print "Count = ", cnt}'`
+
+裡面也有一些function可以用
+印出長度大於18的row。
+`awk 'length($0) > 18'`
+
+使用awk script當作規則
+`awk -f <scriptName>`
+
+### array
+awk 裡面可以定義array，跟普通的array定起來沒什麼差別。
+```
+BEGIN {
+  angel["asuka"] = "verycute"
+  angel["fuuka"] = "verycute too"
+  print angel["asuka"] "\n" angel["fuuka"]
+}
+```
+刪除array的元素。
+```
+delete angel["fuuka"]
+```
+二維陣列
+
+
+
+### 內建的變數
+** ARGV **
+傳入的參數數量，記得awk自己也算一個。
+下面有些是GNU awk才有的變數，在有些狀況可能不支援。
+
+下面列出一些我看到的變數，也許哪天會用到
+CONVFMT 數字的format，預設是 %.6g
+ENVIRON 環境變數
+FILENAME 傳入的檔案名稱
+FS 分隔符，你可以用-F 指定每一行之後怎麼切割column的分隔符，預設是空格。
+RS 也是分隔符，不過是指定一行跟下一行的分隔符，預設是\n。
+OFS 輸出時使用的分隔符
+ORS 輸出時使用的分隔符
+NF (number of filed)這一行有的column數量
+NR（Number of Records Variable） 第幾組資料
+FNR 跟NR差不多，不過是相對於每個檔案，當你一次處理多個檔案時會用到，每次換新檔案就會歸0。
+RLENGTH 使用match時有match到的長度。
+RSTART 使用match時有match到的第一個位置。
+SUBSEP 當你嘗試印出array時，使用的分隔符。
+ARGIND 傳入參數的index，假如你一次傳入多個檔案，可以用來知道當前是哪一個。
+ERRNO 錯誤訊息
+IGNORECASE 設成1的話，就不會在意大小寫。
+LINT 可以檢查你寫的script 是不是符合lint，跟–lint=fatal有同樣的效果。
+PROCINFO 可以用這個抓到process的一些資料。
+
+
 
 
 
