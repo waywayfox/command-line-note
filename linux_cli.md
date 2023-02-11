@@ -21,6 +21,19 @@ alt + f10 最大化視窗
 alt + f9 最小化視窗
 alt + f4  關掉視窗
 
+## pipe
+在使用指令時，我們可以使用pipe功能把每個指令的結果向後輸出。
+通常是使用|來連接
+```
+echo -e "asuka\nfuuka\nfina" | grep asuka
+asuka
+```
+假如你想要連error一起pipe出去的話，可以用|&，下面兩個的效果是一樣的。
+`command1 |& command2`
+`command1 2>&1 | command2`
+
+
+
 
 ## ls
 -l 顯示詳細資訊 \
@@ -90,6 +103,36 @@ alt + f4  關掉視窗
 ```
 echo $(LANG=en_us_8859_1; date '+weekday="%a" month="%b" day="%e" year="%G"')
 ```
+
+## seq
+印出一連串的數字。
+`seq [<start>] [<step>] <end>`
+從start印到end。start跟step預設都是1。
+
+```
+$seq 5
+1
+2
+3
+4
+5
+```
+
+`seq -s <seperator>`
+設定分隔符，預設是換行
+
+你可以結合bc來做些運算
+```
+$seq -s '*' 5 | bc
+120
+```
+要注意它指處理數字，假如你想要印出一堆字母的話可以這樣做
+```
+echo {a..h}
+a b c d e f g h
+```
+
+
 
 ## grep
 grep 是用來查詢檔案中是否有指定的字串用的。
@@ -171,6 +214,12 @@ s socket檔
 
 ## awk
 awk是用來做文本處理的一個command，他可以普通的使用command輸入，也可以寫awk專用的script來處理。
+
+大致的語法是這樣
+```
+pattern { action }
+```
+
 舉例來說，這是最簡單的使用方式，每讀到一行，就把第3跟第4個column的資料印出來，中間夾一個tab。
 `awk '{print $3 "\t" $4}'`
 
@@ -203,8 +252,86 @@ BEGIN {
 ```
 delete angel["fuuka"]
 ```
-二維陣列
 
+** 二維陣列 **
+雖然awk只支援一維陣列，不過你可以用下面方式製造多維陣列。
+就是直接使用兩個index的集合字串當作index。
+```
+array["0,0"] = 100
+print "array[0,0] = " array["0,0"];
+```
+
+### if statement
+基本的語法是
+```
+if ( condition )
+  action
+else if ( condition )
+  action
+else
+  action
+```
+
+```
+{
+  if ( $1 % 2 == 0)
+    print $1, "is even"
+  else
+    print $1, "is odd"
+
+}
+
+```
+### loop statement
+基本的語法是，使用方法跟C一樣。
+假如你只有單行的action，不加大括號也沒差。
+也可以使用break跟continue。
+另外有個內建function，exit()可以用，會直接結束awk的process，
+後面可以加你想要的error code，預設是0。
+```
+for (init; condition; step)
+{
+  action
+}
+
+while (condition)
+  action
+
+```
+
+### function
+awk裡面有內建很多實用的function。數字，字串，時間，bit，還有檔案, pipe之類的處理都有，
+有需要的話再去查。
+
+你也可以自定義function
+```
+function name(arg1, arg2, ...)
+{
+  action
+}
+```
+
+```
+function plus10(n)
+{
+  return n * 10
+}
+
+BEGIN {
+  for (i = 1; i < 10; i++)
+  {
+    print i
+    print plus10(i)
+  }
+
+
+}
+
+```
+
+## output
+跟在bash內一樣，你也可以使用>或>>來將內容導到你想要的檔案中。
+使用pipe來連接其他指令也是可能的。
 
 
 ### 內建的變數
@@ -212,25 +339,25 @@ delete angel["fuuka"]
 傳入的參數數量，記得awk自己也算一個。
 下面有些是GNU awk才有的變數，在有些狀況可能不支援。
 
-下面列出一些我看到的變數，也許哪天會用到
-CONVFMT 數字的format，預設是 %.6g
-ENVIRON 環境變數
-FILENAME 傳入的檔案名稱
-FS 分隔符，你可以用-F 指定每一行之後怎麼切割column的分隔符，預設是空格。
-RS 也是分隔符，不過是指定一行跟下一行的分隔符，預設是\n。
-OFS 輸出時使用的分隔符
-ORS 輸出時使用的分隔符
-NF (number of filed)這一行有的column數量
-NR（Number of Records Variable） 第幾組資料
-FNR 跟NR差不多，不過是相對於每個檔案，當你一次處理多個檔案時會用到，每次換新檔案就會歸0。
-RLENGTH 使用match時有match到的長度。
-RSTART 使用match時有match到的第一個位置。
-SUBSEP 當你嘗試印出array時，使用的分隔符。
-ARGIND 傳入參數的index，假如你一次傳入多個檔案，可以用來知道當前是哪一個。
-ERRNO 錯誤訊息
-IGNORECASE 設成1的話，就不會在意大小寫。
-LINT 可以檢查你寫的script 是不是符合lint，跟–lint=fatal有同樣的效果。
-PROCINFO 可以用這個抓到process的一些資料。
+下面列出一些我看到的變數，也許哪天會用到 \
+CONVFMT 數字的format，預設是 %.6g \
+ENVIRON 環境變數 \
+FILENAME 傳入的檔案名稱 \
+FS 分隔符，你可以用-F 指定每一行之後怎麼切割column的分隔符，預設是空格。 \
+RS 也是分隔符，不過是指定一行跟下一行的分隔符，預設是\n。 \
+OFS 輸出時使用的分隔符 \
+ORS 輸出時使用的分隔符 \
+NF (number of filed)這一行有的column數量 \
+NR（Number of Records Variable） 第幾組資料 \
+FNR 跟NR差不多，不過是相對於每個檔案，當你一次處理多個檔案時會用到，每次換新檔案就會歸0。 \
+RLENGTH 使用match時有match到的長度。 \
+RSTART 使用match時有match到的第一個位置。 \
+SUBSEP 當你嘗試印出array時，使用的分隔符。 \
+ARGIND 傳入參數的index，假如你一次傳入多個檔案，可以用來知道當前是哪一個。 \
+ERRNO 錯誤訊息 \
+IGNORECASE 設成1的話，就不會在意大小寫。 \
+LINT 可以檢查你寫的script 是不是符合lint，跟–lint=fatal有同樣的效果。 \
+PROCINFO 可以用這個抓到process的一些資料。 \
 
 
 
