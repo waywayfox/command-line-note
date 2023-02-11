@@ -467,6 +467,38 @@ sort 使用來排序東西的，假如你有一些log紀錄或是資料需要排
 可以將多個檔案合成一個檔案，可以用來製作備份或是合成library。
 也可以對產生的備份檔進行修改刪除等等動作。
 
+# apt apt-get (Advanced Package Tool)
+通常需要使用最高權限，也就是sudo。
+
+兩者有一些共用的指令，做的事情也是一樣的，下面這些換成apt-get也可以。
+`apt update`
+更新軟體庫清單
+`apt upgrade`
+升級系統軟體
+`apt install <name>`
+安裝軟體
+`apt remove <name>`
+移除軟體
+`apt purge <name>`
+移除軟體跟所有設定檔
+
+下面是apt還有支援的指令。
+`apt search <pattern>`
+搜尋特定的軟體
+`apt edit-sources`
+打開/etc/apt/sources.list，是個包含所有sources的清單。
+`apt list`
+列出所有安裝過的軟體。
+`apt show <name>`
+顯示軟體的詳細資訊
+`apt moo`
+印出一隻牛。
+
+
+
+
+
+
 # 其他筆記
 linux samba路徑
 `/run/user/1000/gvfs/...`
