@@ -33,8 +33,6 @@ asuka
 `command1 2>&1 | command2`
 
 
-
-
 ## ls
 -l 顯示詳細資訊 \
 -a 顯示隱藏檔 \
@@ -76,7 +74,7 @@ asuka
 -n 輸出行號
 
 ## cd
-`cd /` 回到上一層。
+`cd ..` 回到上一層。
 `cd /` 回到root目錄。
 `cd ~` 回到家目錄。
 `cd -` 回到上一次所在的目錄。
@@ -622,7 +620,57 @@ sort 使用來排序東西的，假如你有一些log紀錄或是資料需要排
 印出一隻牛。
 
 
+# tmux
+tmux 是一個 Terminal Multiplexer，可以讓你在單一個console裡面開啟多個視窗。
+安裝完後打tmux就能啟動一個tmux server。
+當你用完一個session之後，你可以不必關掉它，而是detachi它，而是讓他存在tumx之內，讓他在背景繼續執行，
+等你想用的時候，再attach它就好
 
+tmux預設的leader key是Ctrl-b。
+
+`Ctrl-b ?`
+進入help，使用Ctrl-c離開。
+
+
+
+** 切割視窗 **
+
+`Ctrl-b "`
+水平切割
+
+`Ctrl-b %`
+垂直切割
+
+`Ctrl-b c`
+新建一個視窗
+
+`Ctrl-b n/p`
+切換到下一個上一個視窗
+
+`Ctrl-b <num>`
+直接切換到第n個視窗
+
+** Session **
+`tmux ls`
+查看目前session清單。
+
+`tmux attach -t <index/name>`
+連回某個session。
+
+`tmux new -s <name>`
+創建時給予session名字。
+
+`tmux attach -t <index> <name>`
+修改session的名稱。
+
+`Ctrl-b d`
+從當前session離開。
+
+
+# cowsay/think
+印出一隻牛在說話
+-l 其他支援的動物。 \
+-f 指定動物。
 
 
 

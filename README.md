@@ -424,6 +424,9 @@ git config --global alias.last 'log -1 HEAD'
 git config --global alias.glog 'log --all --decorate --oneline --graph'
 ```
 
+`git config --global unset alias.trololo`
+刪除alias
+
 
 
 ## git submodule
