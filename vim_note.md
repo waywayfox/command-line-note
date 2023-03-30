@@ -9,6 +9,17 @@
 當人你可以用lkjh來移動，或是用}{來進行section的移動，不過還有更多移動。
 查詢various-motions得到更多資訊,<number>gg可以移動到指定行數，G可以移動到最後一行。
 
+
+`Ctrl+o/i` 跳到下一個或上一個地方，你可以用`:jumps`來查詢這ㄍㄜ列表。
+`g;`
+`g,`
+上一個下一個改動的地方。
+`gi`
+上一個進入insert mode的位置。
+
+`'< '>`到上次selection的開始或結束位置。
+
+
 ## 搜尋
 ignorecase 無視case
 smartcase 在你搜尋有大寫時，則會無效ignorecase
@@ -48,6 +59,8 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 
 zo 開啟
 zc 關閉
+zR 開起全部
+zM 關閉全部
 
 ## tab and windows
 `:new`
@@ -112,6 +125,8 @@ use `:marks` to check the bookmarks you save. 後面加上字母就可差看單�
 ## digraph
 特殊字元，你可以查詢24.9，在insert mode打<c-k> <組合>來打出你想要的字。
 
-
+## Plug
+`:PlugInstall`
+安裝plugin，如果你跟我一樣使用 junegunn/vim-plug的話。
 
 

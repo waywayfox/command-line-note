@@ -631,7 +631,10 @@ tmux預設的leader key是Ctrl-b。
 `Ctrl-b ?`
 進入help，使用Ctrl-c離開。
 
-
+`Ctrl-b :`
+可以進入command mode。
+`set -g mouse on`
+可以使用滑鼠。
 
 ** 切割視窗 **
 
@@ -650,6 +653,9 @@ tmux預設的leader key是Ctrl-b。
 `Ctrl-b <num>`
 直接切換到第n個視窗
 
+`Ctrl-b w`
+預覽視窗，爆幹帥。
+
 ** Session **
 `tmux ls`
 查看目前session清單。
@@ -665,6 +671,13 @@ tmux預設的leader key是Ctrl-b。
 
 `Ctrl-b d`
 從當前session離開。
+
+** Select  **
+`Ctrl-b [`
+進入選擇模式，使用空白鍵開始選取，Enter結束選取。
+`Ctrl-b ]`
+將選取的資料貼上。
+
 
 
 # cowsay/think

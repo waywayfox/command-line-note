@@ -125,6 +125,16 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 `git log --full-history -- <dir/filename>`
 查詢所有有關這個檔案的commit，包含刪除。
 
+`git log --diff-filter=A -- <filename>`
+查詢某個檔案創建的commit
+
+另外--diff-filter的選項如下
+A = Added \
+C = Copied \
+M = Modified \
+R = Renamed \
+T = Changed \
+
 `git log -L start,end:file`
 用來找出檔案中特定名稱的function的commit
 例如：git log -L :myfunction:path/to/myfile.c
@@ -363,6 +373,9 @@ git checkout test_branch
 
 `git diff --check`
 查看有沒有多餘的空白在你修改的後面
+
+`git diff <branch1> <branch2> -- file`
+查看兩個branch中一個檔案的差異。
 
 ## git config
 
