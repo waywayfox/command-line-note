@@ -149,6 +149,52 @@ T = Changed \
 指定時間
 
 
+要製作patch檔的，主要有兩種作法，一種是git diff 產生，另一種是git format-patch，
+
+# git format-patch
+你可以使用這個產生patch檔，在使用git am或apply來patch這些內容。
+跟diff的主要的不同是它含有更多meta資料，一開始是設計來使用mail來傳送的。
+主要的使用方法如下。
+`git format-patch -<n>`
+產生從前n個commit的patch。
+
+`git format-patch <sha>`
+產生commit到當前的patch。
+
+`git format-patch --root`
+產生從root到當前位置的patch。
+
+`git format-patch -<n> <sha>`
+產生某個commit之前n個的patch。
+
+`git format-patch <commit1>...<commit2>`
+產生2個commit之間的patch。
+
+`git format-patch -o <filename>`
+指定output檔案存放的資料夾。
+
+
+## git am
+用來apply mail傳過來的patch檔的用的。
+
+`git am --abort`
+放棄之前的patch的過程，假如之前有失敗你可能會需要用這個來重置狀態。
+
+`git am <file/path>`
+apply某個檔案，或是資料夾，假如是資料夾，它會按照編號apply。
+
+## git apply
+
+`git apply <file>`
+apply patch檔，記得apply並不會幫你commit。
+`git apply --stat <file>`
+`git apply --check <file>`
+這兩個不會apply patch檔，用來幫你檢查apply後有沒有什麼問題的。
+
+
+
+
+
 ## git pickaxe
 
 ## git rebase
@@ -225,6 +271,9 @@ git 裡面有被稱作upstream的pointer，它指向remote的一個與當前bran
 假如你想要有圖形化的界面來解決merge conflict，你可以用這個，不過有時候會要做些別的設定。
 
 
+`git merge-base <commit1> <commit2>`
+預設的merge是使用3-way merge，它會找出2個commit的base，在用這個base來選擇,merge要選擇哪個，
+這個command可以找出base是哪個commit。
 
 ## git pull
 
@@ -360,6 +409,7 @@ git checkout test_branch
 
 ## git diff
 用來查看目前的改動跟之前的改動有什麼差別。
+也可以用來產生patch檔。
 
 `git diff <branch>`
 查看目前的HEAD 跟<branch>之前的差異。
@@ -581,6 +631,11 @@ tag分成兩種，lightweight跟annotated。
 lightweight有點像是不會前進的branch，只是單純指向某個commit。
 annotated就紀錄更多東西，而且會存進git的database中，通常會建議你使用annotated，因為他有更多資料。
 
-
+### Rerere
+Reuse recorded resolution的簡稱，它可以用來紀錄你每次解決conflict的方式，
+久而久之，它會自動幫你解決一些conflict。
+你需要在config裡面把rerere.enabled設定成true。
+`git rerere`
+當你有衝突時，它會嘗試自動幫你解決。
 
 
