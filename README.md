@@ -38,8 +38,7 @@ git 的所有檔案有兩種狀態，untracked跟tracked，untracked代表這個
 大部分情況你可以在網路找到你的語言所需要的ignore file，不過如果你想自己寫的話，
 下面是一些簡單的語法
 使用\#當作comment
-預設上這個他會對每個規則遞迴到每個資料夾。
-在最前面加上\\表示不需要遞迴執行這項規則。
+預設上這個他會對每個規則遞迴到每個資料夾。 在最前面加上\\表示不需要遞迴執行這項規則。
 在最後面加上\\表示這規則是個資料夾。
 使用**可以表示巢狀的資料夾
 
@@ -59,6 +58,7 @@ build/
 doc/*.txt
 // ignore all .pdf files in the doc/ directory and any of its subdirectories
 doc/**/*.pdf
+
 ```
 
 ## git add
@@ -136,22 +136,24 @@ R = Renamed \
 T = Changed \
 
 `git log -L start,end:file`
-用來找出檔案中特定名稱的function的commit
+`git log -L :function:file`
+查詢改動某個檔案幾行到幾行，或是含有特定字串的commit。
+用來找改動function的commit很好用
 例如：git log -L :myfunction:path/to/myfile.c
 
-`git log -S function_name`
+`git log -S <pattern>`
 查詢某個有改動某字串的commit。
 
 `git log --all --decorate --oneline --graph`
-簡單印出還不錯的log。
-
-`git log --since=<date> --until=<date>`
+簡單印出還不錯的log。 `git log --since=<date> --until=<date>`
 指定時間
 
+### git shortlog
+顯示出範圍內的commit title。
 
+
+## git format-patch
 要製作patch檔的，主要有兩種作法，一種是git diff 產生，另一種是git format-patch，
-
-# git format-patch
 你可以使用這個產生patch檔，在使用git am或apply來patch這些內容。
 跟diff的主要的不同是它含有更多meta資料，一開始是設計來使用mail來傳送的。
 主要的使用方法如下。
@@ -498,12 +500,28 @@ git config --global alias.glog 'log --all --decorate --oneline --graph'
 把目前所有引用的submodule都更新到最新版本
 
 ## git stash
+將目前你track的檔案改動先存起來。
+
+`git stash list`
+查看目前的stash。
 
 `git stash`
-將現在改動的檔案修改儲存起來
+將現在改動的檔案修改儲存起來，會按照stack的方式儲存，最後的會放在0的位置。
 
-`git stash apply`
-將最近儲存的修改附加上去。
+`git stash save '<message>'`
+跟stash一樣，不過你可以加上message讓你更好辨識。
+
+`git stash apply [stash@{n}]`
+將最近儲存的修改附加上去，加上後面的可以選擇你要哪一個stash。
+
+`git show stash@{n}`
+你可以簡單的使用show來查看stash的資料。
+
+`git stash drop`
+刪除最後1個stash。
+
+`git stash pop`
+基本上就是apply加上drop。
 
 `git stash clear`
 刪除所有儲存的修改
@@ -540,6 +558,13 @@ git config --global alias.glog 'log --all --decorate --oneline --graph'
 `git tag -d <tag>`
 刪掉tag。
 
+## git describe
+用來顯示離當前最近tag。
+
+## git archive
+`git archive master --prefix='./' | gzip > ``git describe``.tar.gz`
+你可以用這個來製作release，加上--format來指定你的輸出格式。
+
 
 ## git show
 讓你可以檢視某個git object。
@@ -557,7 +582,7 @@ git config --global alias.glog 'log --all --decorate --oneline --graph'
 `git ls-files -- *.c`
 
 
-##git ls-tree
+## git ls-tree
 可以顯示某次commit時git object的狀態，包含權限，object名稱，檔案名稱等等。
 `git ls-tree <commit>`
 
