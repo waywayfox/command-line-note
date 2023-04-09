@@ -66,14 +66,33 @@ doc/**/*.pdf
 git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個檔案標記為resolve。當你下了git add這個指令，代表你想把這個瞬間這個檔案的樣子記錄下來，放進歷史的紀錄中。
 
 ## git reset
+reset會改動HEAD本身所在的branch。而checkout只會移動HEAD本身。
 當你想要將在stage狀態的檔案恢復到原來的狀態，你可以使用reset。
 在2.23.00版之後改成restore
 
 `git reset HEAD <file>`
 將檔案從stage狀態移除，不會改動你的修改。
 
-`git reset --hard`
+`git reset --<soft/mixed/hard>`
+reset有3種模式，預設是mixed。
+reset會移動你HEAD的位置。
+soft基本上只是解除你上次git commit的動作。
+mixed除此之外，還會解除git add的動作。
+hard就是更極端，連你working tree的修改都會一併解除。
 假如你使用--hard，不僅檔案會被移出stage狀態，還會將檔案恢復到指定commit的狀態。
+
+REF = branch
+
+|..........................| HEAD | Index | Workdir | WD safe? |
+|--------------------------|------|-------|---------|----------|
+|**Commit Level**          |
+|reset --soft [commit]     | REF  | NO    | NO      | YES      |
+|reset [commit]            | REF  | YES   | NO      | YES      |
+|reset --hard [commit]     | REF  | YES   | YES     | **NO**   |
+|checkout <commit>         | HEAD | YES   | YES     | YES      |
+|**File Level**            |
+|reset [commit]  <paths>   | NO   | YES   | NO      | YES      |
+|checkout [commit] <paths> | NO   | YES   | YES     | **NO**   |
 
 
 ## git commit
@@ -86,6 +105,23 @@ git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個�
 
 `git commit -a -m <message>`
 假如你真的很懶，你可以加上-a，這樣他就會把所有已經track的檔案stage之後commit。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## git log
 
@@ -203,6 +239,22 @@ apply patch檔，記得apply並不會幫你commit。
 
 `git rebase -i <sha1>`
 對現在到目標commit之間的commit進行挑選和位置排列
+在顯示的commit中，最舊的在最上面，所以假如你選squash，會把這個commit合到上一個（上一行）的commit。
+
+選擇edit可以讓你把中間的commit切成更多個。
+```
+git reset HEAD^
+git add asuka.txt
+git commit -m "fix asuka"
+git add fuuka.txt
+git commit -m "fix fuuka"
+git rebase --continue
+```
+
+## git filter-branch
+可以大規模修改commit，可以對所有commit執行某些指令，之後在重commit。
+有蠻多問題的，建議使用git-filter-ropo這個工具來替代。
+
 
 ## git fetch
 `git fetch <remote>`
@@ -581,10 +633,25 @@ git config --global alias.glog 'log --all --decorate --oneline --graph'
 可以在後面加上--來搜尋符合特定pattern的檔案。
 `git ls-files -- *.c`
 
+## git cat-file
+`git cat-file -p <object>`
+顯示commit的object，author跟commiter。
 
 ## git ls-tree
 可以顯示某次commit時git object的狀態，包含權限，object名稱，檔案名稱等等。
 `git ls-tree <commit>`
+
+
+
+## git gc
+garbage collector
+`git gc --prune=now`
+立刻啟動資源回收機制。
+
+
+## git fsck
+`git fsck --unreachable`
+查詢現在已經無法到達的object。
 
 
 ## Git 小知識

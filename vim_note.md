@@ -5,7 +5,7 @@
 `vim -[oO] file` 以分割方式開啟
 `:e <file>` 在裡面開啟檔案
 
-# 移動
+## 移動
 當人你可以用lkjh來移動，或是用}{來進行section的移動，不過還有更多移動。
 查詢various-motions得到更多資訊,<number>gg可以移動到指定行數，G可以移動到最後一行。
 
