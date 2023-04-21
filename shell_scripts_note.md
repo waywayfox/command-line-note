@@ -72,6 +72,17 @@ read answer
 ${answer=1}
 ```
 
+```
+string="aaa:vvv:ccc"
+IFS=':' read -r -a array <<< "$string"
+for element in "${array[@]}"
+do
+    echo "$element"
+done
+```
+將一個string轉成array，並把他印出來。
+
+
 
 ## 判斷式
 bash script跟普通程式語言的判斷式的表達差異很大，
