@@ -65,6 +65,15 @@ doc/**/*.pdf
 當你剛clone一個repository下來時，所有檔案都是tracked跟unmodified的，當你改動檔案，這個檔案就是modified，而當你add一個檔案，它就會變成staged狀態，代表說你打算把這個檔案記錄在下一個版本中。
 git add有三個功能，追蹤某個檔案，stage修改的檔案，將某個檔案標記為resolve。當你下了git add這個指令，代表你想把這個瞬間這個檔案的樣子記錄下來，放進歷史的紀錄中。
 
+`git add -u`
+只加入已經track的檔案。
+
+
+`git add <directory> :<the file you don't want to add>`
+假如你想要把整個目錄下的檔案都加進去，但是裡面混了一些會在make時產生的.o檔你可以加上:來無視這些檔案。
+`git add testing/ :*.o`
+
+
 ## git reset
 reset會改動HEAD本身所在的branch。而checkout只會移動HEAD本身。
 當你想要將在stage狀態的檔案恢復到原來的狀態，你可以使用reset。
@@ -187,6 +196,14 @@ T = Changed \
 ### git shortlog
 顯示出範圍內的commit title。
 
+### git blame
+用來找出是誰寫出這行東西的。
+`git blame -L <start>,<end> <file>`
+start跟end除了是行數外，還可以是regex或offset。
+
+`git blame -L :<funcname> <file>`
+
+
 
 ## git format-patch
 要製作patch檔的，主要有兩種作法，一種是git diff 產生，另一種是git format-patch，
@@ -210,6 +227,18 @@ T = Changed \
 
 `git format-patch -o <filename>`
 指定output檔案存放的資料夾。
+
+## git bundle
+假如有一天你無法使用普通的http或ssh來傳輸你的資料，你可以是用bundle這個指令來幫你壓縮你的資料成檔案，讓你可以用其他方式傳輸。
+基本上他會把多個你指定的commit的改動的patch集合成一個類似local git server的東西，你可以對他進行clone，pull，fetch之類的操作。
+基本創建是這樣
+`git bundle create <filename> [HEAD] <range>`
+
+`git bundle create repo.bundle HEAD master`
+這指令會把master的所有commit集合打成一包，注意如果你要讓別人可以clone這東西，記得要加上HEAD。
+
+`git bundle verify <filename>`
+驗證這個bundle file是否可用還有裡面包含哪些commit。
 
 
 ## git am
@@ -263,8 +292,7 @@ git rebase --continue
 `git fetch --all`
 抓所有remote的資料。
 
-`git rebase --onto <target> <from> <to>`
-有很很神奇的用法，可以將from之後1個commit到to之間的commit接到target的部份
+`git rebase --onto <target> <from> <to>` 有很很神奇的用法，可以將from之後1個commit到to之間的commit接到target的部份
 下面我有個fina1~3跟fuuka1~3兩個branch，我想把fina12接到fuuka1後面。
 所以我就下了`git rebase --onto 40ed5f0 f045302 a6035be`
 可以看到結果，從fuuka1後面在長出了一個branch，就是我們要接的fina12，但是因為這像操作，所以fina3消失了。
@@ -428,7 +456,8 @@ git checkout test_branch
 `git branch -m <name>` 改變現在所在分支的名稱，記得你只是改了local的名稱，記得要push。
 `git branch -d <name>` 刪除branch。
 
-
+## git bisect
+用來debug用的，設定好好的跟壞的commit，他會幫你決定你該看哪個commit有才能最快找到有問題的commit。
 
 
 ## git mv
@@ -481,6 +510,9 @@ git checkout test_branch
 `git diff <branch1> <branch2> -- file`
 查看兩個branch中一個檔案的差異。
 
+`git add --all $(git diff --diff-filter=D --name-only)`
+你可以用--diff-filter來指定檔案的狀態。
+
 ## git config
 
 git的config有分成3個層級，system, global, 跟local。
@@ -508,6 +540,9 @@ git config是預設的選項。
 或是全部列出來，顯示你的設定跟他們是哪一層級，你不加show --show-origin就只會列出來而已。
 `git  config --list --show-origin`
 
+`git confit --get [name]`
+使用--get來抓取特定設定的值。
+
 
 最初你開始使用時，你一定要設定你的名字跟email才行
 ```
@@ -526,6 +561,23 @@ git config --global core.editor emacs
 `git config credential.helper`
 假如你不想要一直打密碼，你可以使用credential相關的設定，或是直接用SSH。
 
+`git config --global commit.template ~/.gitmessage.txt`
+你可以設定一個commit的template檔，讓你commit時一開始就有這個template。
+
+`git config --global core.pager ''`
+設定你呼叫log或diff時用的pager。預設是less。
+假如你用了上面這行，他會一次全部印出來不管他有多長。
+
+`git config --global core.excludesfile ~/.gitignore_global`
+設定global的ignore file。
+
+
+
+下面列出一些也許哪天可以用到的設定
+core.autocrlf
+core.whitespace
+
+
 
 ### Git Aliases
 你可以跟shell一樣設定git所使用的alias
@@ -534,6 +586,10 @@ git config --global alias.co checkout
 git config --global alias.br branch
 git config --global alias.ci commit
 git config --global alias.st status
+# alias for submodule
+git config alias.sdiff '!'"git diff && git submodule foreach 'git diff'"
+git config alias.spush 'push --recurse-submodules=on-demand'
+git config alias.supdate 'submodule update --remote --merge'
 
 git config --global alias.unstage 'reset HEAD --'
 git config --global alias.kaifuku 'checkout HEAD --'
@@ -547,9 +603,26 @@ git config --global alias.glog 'log --all --decorate --oneline --graph'
 
 
 ## git submodule
+當你想把需要一些外部的程式，但又不想要她真的合在你的repository的話，你可以用submodule的方式引入。
+`git submodule add <url>`
+新增一個submodule。
+當你新增第一個submodule時，他會產生一個.gitmodule的檔案，裡面記錄了你所使用的submodule。
 
+`git submodule init`
+`git submodule update`
+若你clone一個新的repository，它會幫你建立submodule的目錄，但是裡面是空的，你得先下這兩行來更新才行。
+`git clone <url> --recurse-submodules`
+你也可以在clone時加上--recurse-submodules，他就會幫你做這件事。
+
+`git submodule update --remote`
 `git submodule foreach --recursive git pull <remote> <branch>`
 把目前所有引用的submodule都更新到最新版本
+
+### git submodule foreach
+加上foreach會讓你對所有submoudle執行某些動作。
+
+`git submodule foreach 'git checkout -b featureA'`
+
 
 ## git stash
 將目前你track的檔案改動先存起來。

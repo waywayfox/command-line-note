@@ -5,8 +5,7 @@
 
 ## 路徑與執行
 最簡單的方式，就是使用sh，這可以用來簡單測試這個script。
-```
-sh hello.sh
+``` sh hello.sh
 ```
 
 當你要執行你的script時，你當然可以用sh加上路徑來指定它，但若是你要
@@ -72,8 +71,7 @@ read answer
 ${answer=1}
 ```
 
-```
-string="aaa:vvv:ccc"
+``` string="aaa:vvv:ccc"
 IFS=':' read -r -a array <<< "$string"
 for element in "${array[@]}"
 do
@@ -114,7 +112,6 @@ $var != ""
 -x $var # exist and can be execute
 ```
 你可以在判斷前面加上!，來表示not，若是你要連接判斷式，-a代表and, -o代表or。
-
 
 如果你想測試一下判斷式，你可以用test這個指令，查詢test的指令還可以得到比上面更多的判斷，假如你在上面找不到你想要的東西的話。
 ```
@@ -207,6 +204,9 @@ while getopts "d:t:?" opt; do
   esac
 done
 ```
+
+假如你接了一些flag，然後你想要你後面的參數排到你想要的位置，你可以使用shift，他會將原本後面的東西移到前面，$2->$1。
+`shift 1`
 
 ## 算術功能
 你可以用$(())來執行基本的數字計算。

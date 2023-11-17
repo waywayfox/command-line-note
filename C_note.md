@@ -16,8 +16,7 @@
 #define A2(x) asuka##x
 #define A3(x,y,z) x ##_asuka_ ## y ## _fuuka_ ## z
 #define debug(fmt, ...) { \
-  fprintf(stderr, "(%s:%d) "fmt"\n", __FILE__, __LINE__, ##__VA_ARGS__); \
-}
+  fprintf(stderr, "(%s:%d) "fmt"\n", __FILE__, __LINE__, ##__VA_ARGS__); \ }
 
 int main() {
   printf("%s\n", str(is very cute));         // printf("%s\n", "is very cute");
@@ -423,7 +422,6 @@ clean:
 
 
 
-
 ## CMake
 
 CMake是一套可以自動產生makefile的系統，他會根據你所定義的CMakeLists.txt這個檔案所定義的規則建立build system。
@@ -440,8 +438,9 @@ install(DESTINATION、PERMISSIONS、CONFIGURATIONS、COMPONENT) 設定安裝路�
 
 
 
-
-
+## 一些錯誤
+implicit declaration of function
+他找不到這個function，可能是.o檔有問題，或是你沒有include目標的.h檔。
 
 
 

@@ -18,8 +18,7 @@ alt 切換tab
 
 
 alt + f10 最大化視窗
-alt + f9 最小化視窗
-alt + f4  關掉視窗
+alt + f9 最小化視窗 alt + f4  關掉視窗
 
 ## pipe
 在使用指令時，我們可以使用pipe功能把每個指令的結果向後輸出。
@@ -503,7 +502,7 @@ aAaBbB
 ```
 
 
-##　sort
+##i sort
 sort 使用來排序東西的，假如你有一些log紀錄或是資料需要排序，就可以使用。
 
 
@@ -575,6 +574,11 @@ sort 使用來排序東西的，假如你有一些log紀錄或是資料需要排
 -a 顯示全部資訊 \
 -v 版本
 
+除此之外，你還可以到下面的資料夾裡的檔案查看更詳細的資訊。
+```
+ls -l /etc/*-release
+```
+
 
 # du
 簡單顯示硬碟用量
@@ -644,6 +648,8 @@ tmux預設的leader key是Ctrl-b。
 `Ctrl-b %`
 垂直切割
 
+`Ctrl-b <方向鍵>`
+
 `Ctrl-b c`
 新建一個視窗
 
@@ -669,6 +675,9 @@ tmux預設的leader key是Ctrl-b。
 `tmux attach -t <index> <name>`
 修改session的名稱。
 
+`Ctrl-b ,`
+修改當前session的名稱。
+
 `Ctrl-b d`
 從當前session離開。
 
@@ -678,12 +687,18 @@ tmux預設的leader key是Ctrl-b。
 `Ctrl-b ]`
 將選取的資料貼上。
 
-
+`Ctrl-b t`
+顯示目前時間
 
 # cowsay/think
 印出一隻牛在說話
 -l 其他支援的動物。 \
 -f 指定動物。
+
+# ctags
+
+`ctags --list-languages`
+顯示所有ctags支援的語言。
 
 
 

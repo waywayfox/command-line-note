@@ -1,5 +1,17 @@
 # VIM note
 
+## 快捷鍵記憶
+
+% 跳到相對應的括號
+
+Ctrl+o navigate to the previous location in the jump list (think o as old)
+Ctrl+i navigate to the next location in the jump list (i and o are usually next to each other)
+g; go to the previous change location
+g, go to the newer change location
+gi place the cursor at the same position where it was left last time in the Insert mode
+:jumps 所有跳躍點記憶
+
+
 ## 開啟
 `vim -p file` 以分頁方式開啟
 `vim -[oO] file` 以分割方式開啟
@@ -45,6 +57,8 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 `:h i_CTRL-O`
 `CTRL-]` 跳轉到當前游標所在的關鍵字
 `CTRL-o` 跳到上一個地方
+`CTRL-t` 跳到下一個地方
+
 
 
 ## 在vim 中使用指定
@@ -68,6 +82,12 @@ zM 關閉全部
 `:tabe <file>`開啟檔案在分頁
 `CTRL-w [sv]` 分割視窗
 `CTRL-w [<>+-]` 調整當前分割視窗的長寬
+
+`:tabmove` 可以用來移動你開啟的分頁
+`:+tabmove` 將當前tab往後一格
+`:-tabmove` 將當前tab往前一格
+`:$tabmove` 將當前tab移到最後
+`:tabmove number` 將當前tab移到第n個，從0開始。
 
 ## keymapping
 可以讓你更好擴充你的mapping，假如你想要使用的鍵已經被用掉，你可以在前面加個<leader>來使用它。
@@ -129,4 +149,18 @@ use `:marks` to check the bookmarks you save. 後面加上字母就可差看單�
 `:PlugInstall`
 安裝plugin，如果你跟我一樣使用 junegunn/vim-plug的話。
 
+
+
+
+
+
+## FZF vim
+
+<leader>fl :Lines 搜尋當前已經載入的buffer
+<leader>fb :BLines 搜尋當前所在的buffer
+<leader>ff :Files 搜尋檔案，基本上會執行FZF_DEFAULT_COMMAND
+<leader>fg :GFiles 搜尋被git trace的檔案
+<leader>f? :GFiles? 搜尋git status裡的檔案。
+<leader>ft :Tags<cr> 搜尋tags
+<leader>fa :Ag ag search
 
