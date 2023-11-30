@@ -9,7 +9,7 @@
 像是#可以把後面的引數當作string來處理，就是加上""。
 加上##可以讓前面或後面部分當作要置換成引數，這樣一來，你可以用##來連接多個token。
 
-```
+```C
 #define str(s) #s
 #define notstr(s) s
 #define A1(x) asukax
@@ -417,10 +417,69 @@ clean:
 
 
 ### GDB (GNU debugger)
+是一種debugger，要使用它debug，你需要在編譯時加入-g的flag，他會把一些debug用的symbol放進去。
+編譯好之後，你就可以用gdb來進入debug模式。
+```
+gdb <file>
+```
+下面有幾個常用的command是你可以在gdb模式下使用的。
+
+#### run & continue & step & next
+下run就會開始執行你輸入的程式，通常你會想要再輸入一些斷點之後再開始做這件事。
+當你暫停時，當你做完你想做的事後，你可以輸入continue讓城市繼續進行，他會持續執行直到遇到下一個斷點。
+
+step跟next則是相似，都是再執行一行程式。差別是next不會跳進其他sub-routine之中。
+假如你什麼都不輸入按enter的話，gdb會執行你上一次輸入的東西。
+
+
+#### break
+設定斷點，你也可以簡寫成b就好，當你執行到你設定的斷點時，程式就會停下來等待你下一步的動作。
+你也可以設定斷點在某個function，每次你呼叫這個function時就會停下。
+```
+(gdb) break file1.c:6
+(gdb) break my func
+```
+你也可以設定一些條件在斷點上，這樣他就只會在符合條件時中斷程式。
+```
+break file1.c:6 if i >= ARRAYSIZE
+```
+
+#### print &
+你可以用print來印出目前變數的值。加上/x可以讓以hex來呈現。
+使用watch監視變數的值，當它改變時，他就會暫停程式，然後印出舊值跟新值。
+```
+(gdb) print my var
+(gdb) print/x my var
+(gdb) watch my var
+```
+
+#### 其他常用的command
+* list 印出10行程式碼。
+* backtrace(bt) 顯示seg fault的stack。
+* where 跟backtrace差不多，不過你可以在程式執行中印出來。
+* finish 執行到當前function結束。
+* delete 刪除斷點
+* info breakpoints 顯示所有設定的斷點。
 
 
 
 
+### addr2line
+這是一個可以找出crash的位置的工具，輸入執行檔跟crash的位置，他會幫你找出那個位置到底是在code的哪裏。
+```
+addr2line [-a|--addresses]
+          [-b bfdname|--target=bfdname]
+          [-C|--demangle[=style]]
+          [-r|--no-recurse-limit]
+          [-R|--recurse-limit]
+          [-e filename|--exe=filename]
+          [-f|--functions] [-s|--basename]
+          [-i|--inlines]
+          [-p|--pretty-print]
+          [-j|--section=name]
+          [-H|--help] [-V|--version]
+          [addr addr …]
+```
 
 ## CMake
 
@@ -435,7 +494,18 @@ target\_link\_libraries(myexec mylib)
 install(DESTINATION、PERMISSIONS、CONFIGURATIONS、COMPONENT) 設定安裝路徑還有一些其他設定。
 
 
+## errno
+有些library會支援errno，你可以用下面的方式使用它。
+```C
+#include <errno.h>
 
+result = bind(sockfd, res->ai_addr, res->ai_addrlen);
+if (result == -1)
+{
+perror("bind");
+return 1;
+}
+```
 
 
 ## 一些錯誤

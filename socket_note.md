@@ -169,19 +169,44 @@ int send(int sockfd, const void *msg, int len, int flags);
 sendto(int sockfd, const void *msg, int len, unsigned int flags, const struct sockaddr *to, socklen_t tolen);
 int recv(int sockfd, void *buf, int len, int flags);
 int recvfrom(int sockfd, void *buf, int len, unsigned int flags, struct sockaddr *from, int *fromlen);
+
+recv(new_fd, inputBuffer, sizeof(inputBuffer), 0);
+send(new_fd, outputBuffer, sizeof(outputBuffer), 0);
+```
+
+### close & shutdown
+當你使用完一個socket，你就需要把它關掉，這裡可以用close(因為在lunux下什麼都是檔案)或是shutdown。
+shutdown並不會關閉檔案，只是阻擋你所選擇的流向而已，close才會真的刪除它。 \
+how你可以傳0, 1, 2。
+* 0 不再接收
+* 1 不再傳輸
+* 2 不再接收跟傳輸
+```C
+int shutdown(int sockfd, int how);
+shutdown(sockfd, 2);
+close(sockfd);
+```
+## 進階操作
+
+### blocking
+一般來說，這些socket的操作，通常會等待到直到完成，但假如你不想要他這樣做的話，可以用fcntl來設定。
+```C
+fcntl(sockfd, F_SETFL, O_NONBLOCK);
 ```
 
 
+### Select
+假如你是server，你需要同時監視多個socket時，妮該怎麼辦呢，你可以用上面的方式把所有socket設成non blocking，但是這樣會吃掉很多資源。
+這時你可以用select，他可以幫你監視多個socket，只要輸入對應的readfds、writefds， exceptfds就好。
 
-
-
-
-
-
-
-
-
-
+```C
+int select(int numfds, fd_set *readfds, fd_set *writefds,
+           fd_set *exceptfds, struct timeval *timeout);
+FD_SET(int fd, fd_set *set);     //將 fd 新增到 set。
+FD_CLR(int fd, fd_set *set);     //從 set 移除 fd。
+FD_ISSET(int fd, fd_set *set);   //若 fd 在 set 中，傳回 true。
+FD_ZERO(fd_set *set);            //將 set 整個清為零。
+```
 
 
 
