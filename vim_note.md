@@ -16,6 +16,7 @@ gi place the cursor at the same position where it was left last time in the Inse
 `vim -p file` 以分頁方式開啟
 `vim -[oO] file` 以分割方式開啟
 `:e <file>` 在裡面開啟檔案
+`:e` 假如你在別的地方修改了檔案，你可以使用這個來reload這個檔案。
 
 ## 移動
 當人你可以用lkjh來移動，或是用}{來進行section的移動，不過還有更多移動。
@@ -31,12 +32,17 @@ gi place the cursor at the same position where it was left last time in the Inse
 
 `'< '>`到上次selection的開始或結束位置。
 
+`zz` 置中
+`zs` 把當前游標處移到畫面最左
+
+
+
 
 ## 搜尋
 ignorecase 無視case
 smartcase 在你搜尋有大寫時，則會無效ignorecase
 `:noh` 關掉搜尋顯示的highlight
-這樣可以搜尋你要的pattern，有更多匹配模式可以查magic。
+這樣可以搜尋你要的pattern，有更多匹配模式可以查magic
 `/<pattern>`
 
 若是你要取代一些東西，可以查usr\_12.txt
@@ -47,6 +53,10 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 
 假如在某些搜尋下導致你的vim顯示 有些怪，你可能需要使用redraw。
 
+## session
+你可以把當前的狀態給存下來，之後用vim -S <session file>或是:source <session file>來恢復。
+`:mksession`
+
 
 ## Help
 
@@ -55,7 +65,7 @@ smartcase 在你搜尋有大寫時，則會無效ignorecase
 
 若是你的快捷鍵並不是在normal mode下，在前面加上<mode>\_<shortcut>
 `:h i_CTRL-O`
-`CTRL-]` 跳轉到當前游標所在的關鍵字
+`CTRL-]` 轉到當前游標所在的關鍵字
 `CTRL-o` 跳到上一個地方
 `CTRL-t` 跳到下一個地方
 

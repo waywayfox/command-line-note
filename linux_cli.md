@@ -676,7 +676,7 @@ tmux預設的leader key是Ctrl-b。
 修改session的名稱。
 
 `Ctrl-b ,`
-修改當前session的名稱。
+修改當前pane的名稱。
 
 `Ctrl-b d`
 從當前session離開。
