@@ -398,6 +398,7 @@ git 裡面有被稱作upstream的pointer，它指向remote的一個與當前bran
 增加新的remote。
 
 `git remote set-url origin <remote>`
+`git remote set-url origin git@github.com:waywayfox/command-line-note.git`
 若是你remote的repository有改名稱，或是你存放的遠端路徑有改變，使用這一條更改。
 
 `git remote show <remote>`

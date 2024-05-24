@@ -74,12 +74,19 @@ source code optimization 會根據你的設定跟編譯器進行optimize。
 
 #### assembly
 根據編譯器將組合語言轉換成對應的機器語言，基本上就是對表。
-這個階段後，就會產生.o檔。
+這個階段後，就會產生.o檔，在大部分makefile都會加上-c這個flag
+
+
+
 `gcc -Wall -c asuka.c -o asuka.o`
 這個階段的結果已經不是人能理解的了，不過你可以透過objdump, nm來檢查一些東西。
 
 #### linking
 把那些.o檔跟你想要引用的那些.a檔之類的全部集合起來產生出一個執行檔。
+
+
+
+
 
 
 
@@ -158,11 +165,12 @@ pwd
 
 
 
-$@  表示目標文件
-$^  表示所有的依賴文件
-$<  表示第一個依賴文件
-$?  表示比目標還要新的依賴文件列表
-$$  表示一個金錢符號
+$@  表示目標文件 \
+\$$^  表示所有的依賴文件 \
+\$<  表示第一個依賴文件 \
+\$?  表示比目標還要新的依賴文件列表 \
+\$$  表示一個金錢符號 \
+
 ```
 	lire='lire is very cute';echo $$lire
 ```
@@ -183,6 +191,7 @@ makefile裡面有兩種方式表示wildcard，\*跟%，兩者雖然都是wildcar
 ```
 %.o: %.c
 ```
+
 * Static Pattern Rules
 ```
 targets....: target-pattern: prereq-patterns ...

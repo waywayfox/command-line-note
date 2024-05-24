@@ -19,7 +19,8 @@ SSL(secure sockets layer)在1995年創立前後出了3個大版本，後來因�
 3. Key exchange algorithm
 4. Authentication algorithm
 5. Encryption algorithm and strength
-6. MAC (integrity) algorithm
+6. MAC (integrity) or hash algorithm
+
 
 
 # Key Generate
@@ -167,6 +168,14 @@ CSR(Certificate Signing Request)
 
 Basic Constraints表示這個簽章代表CA，讓他可以用這個證書簽署其他簽章。
 Key Usage (KU) and Extended Key Usage (EKU)用來設定這key到底可以用在什麼地方。
+
+
+## Base64
+Base64 是一種為了確保傳輸正確而發展出來的方法，因為傳輸不可見的ascii character可能會在各個系統造成一些問題，
+所以說，他們把要傳輸的資料每6個bit分成一個chuck，這也是2^6=64，base64名稱的由來，之後並把這個chunck map到可顯示的acsii。
+分別為a~z，A~Z，0~9，這樣一共62個字，最後兩個根據系統不同有差，不過用可見的ascii來顯示就能保證傳輸的正確性。
+
+不過這會產生一個小問題，因為8跟6的最小公倍數是24，也就是三個字元，假如你原本的文件不夠除怎麼辦，這時候他會在文件最後方加上=，兩個=代表最後一個chunck是只有byte長，一個=代表有兩btye長，沒有的話代表剛好整除3。
 
 
 

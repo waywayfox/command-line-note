@@ -5,7 +5,8 @@
 
 ## 路徑與執行
 最簡單的方式，就是使用sh，這可以用來簡單測試這個script。
-``` sh hello.sh
+``` sh
+hello.sh
 ```
 
 當你要執行你的script時，你當然可以用sh加上路徑來指定它，但若是你要
@@ -46,7 +47,7 @@ $# 傳進的參數的數量。 \
 $0 當前的script name \
 $\* 所有參數 \
 $@ 所有參數 \
-$$ pid
+\$\$ pid
 
 
 
@@ -60,18 +61,19 @@ $$ pid
 ```
 "${var%${var#?}}"
 ```
-${var#pattern} #代表會回傳除了第一個符合pattern的match的其他東西，而這裡的pattern是?，代表任何一個字元，也就是會剩下第一個字元外的所有東西。
-${var%pattern} %則會刪除所有在pattern的部份，在這裡的pattern是除了第一個字元之外的所有東西，所以被刪除之後，就剩下第一個字元了。
+\${var#pattern} #代表會回傳除了第一個符合pattern的match的其他東西，而這裡的pattern是?，代表任何一個字元，也就是會剩下第一個字元外的所有東西。\
+\${var%pattern} %則會刪除所有在pattern的部份，在這裡的pattern是除了第一個字元之外的所有東西，所以被刪除之後，就剩下第一個字元了。
 
 ${var:=word} 這個指令是說，若是var有值 ，則回傳那個值 ，不然則把word指配給var再回傳，可以用來設定預設值。
 像這樣，假如你預設使用者輸入1~10其中一個，但是當它沒有輸入時，用第一個當作預設的時，就可以這樣用。
-```
+``` sh
 echo "input 1~10? [1]: "
 read answer
 ${answer=1}
 ```
 
-``` string="aaa:vvv:ccc"
+``` sh
+string="aaa:vvv:ccc"
 IFS=':' read -r -a array <<< "$string"
 for element in "${array[@]}"
 do
@@ -85,9 +87,10 @@ done
 ## 判斷式
 bash script跟普通程式語言的判斷式的表達差異很大，
 首先，數字跟字串的判斷方式是完全不同的，數字不能使用普通的>,<,=
+
 下面分成數字，字串 ，檔案。
 如果你想要判斷數字，要這樣做
-```
+``` sh
 $var -eq 5
 $var -ne 5
 $var -gt 5
@@ -124,7 +127,7 @@ lu@lu-VirtualBox:~$ echo $?
 ```
 
 下面是if 跟 case的表示方式，要注意[ <condition> ] 這個中括號是會使用上面說的test這個command，
-```
+``` sh
 if [ <condition> ]; then
   # do something
 elif []; then
@@ -139,7 +142,7 @@ case $var in
 esac
 ```
 有時你在判斷式內呼叫function時，可能會出現錯誤，可以試試把中括號拿掉，或是先算完在丟變數進去，或用下面的方法。
-```
+``` sh
 testfunction()
 {
   return 1
@@ -153,24 +156,25 @@ fi
 ## trap
 trap 有點類似註冊event handler，它可以讓你設定在收到某種信號時，執行某些command。
 一般使用的方式是這樣
-```
+```sh
 trap "<command>" SIGNAL
 ```
 在結束時刪掉test.txt
-```
+```sh
 trap "rm test.txt" EXIT
 ```
 你也可以指定空字串，那他在收到這個信號時就什麼都不會做，可以用不加空字串來回到初始設定的行為。
-```
+```sh
 trap "" EXIT
 trap EXIT
 ```
 加上-p可以查看當前信號的行為
-```
+```sh
 trap -p [SIGNAL]
 ```
+
 你可以用-l來查看所有信號, 比較常用的還有EXIT, DEBUG, RETURN, ERR等等。
-```
+``` sh
 trap -l
 ```
 
@@ -195,7 +199,7 @@ fmt 用來編排文字格式
 getopts裡面放著你要檢查的flag，在使用case去判斷該把什麼放到哪裡或做什麼事。
 冒號:代表說這個flag需要給值，這裡d,t需要指派值，而問號就不用。
 它會把分析的結果放在$OPTARG裡面，根據你的需要指派給變數即可。
-```
+```sh
 while getopts "d:t:?" opt; do
   case $opt in
     d ) DD="$OPTARG" ;;
@@ -212,14 +216,16 @@ done
 你可以用$(())來執行基本的數字計算。
 echo $(( 1 / 2 ))
 這在loop裡很好用，你因為你可以這樣來處理。
-```
+```sh
 index=$(( $index + 1 ))
 ```
+
 ## 檔案輸入
 你可以使用 << 來表示你想把什麼內容灌到這個指令中，像是你想輸入檔案之類的，
 如果你想輸入一個類似檔案的東西，則可以使用EOF來解決，像是下面這樣,
-```
-bc -q -l << EOF
+
+```sh
+bc -q -l <<EOF
   scale=$precision
   $*
   quit
@@ -229,7 +235,6 @@ EOF
 ## eval
 eval 這個指令會把之後的東西作為bash的指令執行，並代換裡面的特殊符號。
 
-
 ## 引入檔案
 假如你想要引入你其他寫的command或是function，你可以使用.來達成。
 不過要注意你的檔案需要在PATH之中才行。
@@ -238,15 +243,17 @@ eval 這個指令會把之後的東西作為bash的指令執行，並代換裡�
 ## 使用者
 linux裡面有許多使用者，你可以在/etc/passwd的裡面找到
 你也可以這樣找到所有uid大於99的使用者。
-```
+
+``` sh
 for name in $(cut -d: -f1,3 /etc/passwd | awk -F: '$2 > 99 {print $1}')
 ```
 
 
-
-
 ## DEBUG
 在執行檔案時，你可以用-x來讓bash來印出錯誤訊息，或是使用set -x來設置這個設定。
+
+
+
 
 
 
