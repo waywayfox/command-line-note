@@ -700,6 +700,18 @@ tmux預設的leader key是Ctrl-b。
 `ctags --list-languages`
 顯示所有ctags支援的語言。
 
+`ctags -R *`
+
+# SSH keygen
+
+```
+ssh-keygen -t rsa -b 4096
+ssh-keygen -t dsa
+ssh-keygen -t ecdsa -b 521
+ssh-keygen -t ed25519
+
+```
+
 
 
 # 其他筆記
