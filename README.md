@@ -142,6 +142,9 @@ REF = branch
 `git log -<number>`
 顯示最近 number 筆的commit訊息
 
+`git log --author="david" --since="2024-01-01" --before="2025-01-01" --oneline `
+指定修改者與時間
+
 `git log -p`
 顯示commit 中每個文件所作的改動
 
@@ -803,5 +806,23 @@ Reuse recorded resolution的簡稱，它可以用來紀錄你每次解決conflic
 你需要在config裡面把rerere.enabled設定成true。
 `git rerere`
 當你有衝突時，它會嘗試自動幫你解決。
+
+
+### repo
+repo 是一個可以用來管理git repo的工具
+他會先去抓取一個repo的列表，然後根據你的需要來抓你的code，有點像是把git指令封裝在python之中。
+所有repo指令都要先init才能開始
+`repot init -u <url>`
+後面可以加的option
+-m 指定你要的版本(tag)或是xml檔，預設會抓default.xml。
+-b 指定branch
+
+init完之後，你就可以使用sync來下載code了。
+基本上等於`git remote update; git rebase origin/branch`
+
+
+
+
+
 
 

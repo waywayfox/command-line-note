@@ -161,3 +161,63 @@ Other
 你還可以提供boot跟shutdown，當開機或關機時他會執行一次。
 你可以定義EXTRA_COMMANDS來加上自定義的command。
 
+
+
+
+## GPIO (General Purpose Input/Output)
+
+
+
+
+
+## DTS(Device Tree Source) file
+
+``` dts
+/dts-v1/;
+
+/ {
+    node1 {
+        a-string-property = "A string";
+        a-string-list-property = "first string", "second string";
+        a-byte-data-property = [0x01 0x23 0x34 0x56];
+        child-node1 {
+            first-child-property;
+            second-child-property = <1>;
+            a-string-property = "Hello, world";
+        };
+        child-node2 {
+        };
+    };
+    emptynode :node2 {
+        an-empty-property;
+        a-cell-property = <1 2 3 4>; /* each number (cell) is a uint32 */
+        child-node1 {
+        };
+    };
+};
+```
+
+所有dts file都會從根節點/ 開始，這個範例內有兩個node在下面，他們的名字是node1跟node2，你可以在名字前面加上label來註記他是在做什麼的，
+像是node2前的那個emptynode，這個emptynode也會成為他的alias。
+在命名時，你可能會看到有類似i2c@40003000之類的名稱，後面的位置叫做unit address，通常是先用@開頭，後面加上位置，這是optional的。
+compatible的格式是"vendor,device",
+vendor的對照表: https://github.com/zephyrproject-rtos/zephyr/blob/main/dts/bindings/vendor-prefixes.txt
+
+reg指的是device的位置，格式是<address, length>。
+status表示這個node是否是啟動的。
+
+定義變數：
+string: a-string = "hello, world!";
+int: an-int = <1>;
+boolean-true: my-true-boolean;// 直接寫上就好，沒有的東西就是false。
+array: foo = <0xdeadbeef 1234 0>;
+uint8-array: a-byte-array = [00 01 ab]
+string-array: a-string-array = "aaa", "bbb", "ccc";
+phandle: a-phandle = <&mynode>;
+phandles: some-phandles = <&mynode0 &mynode1 &mynode2>;
+phandle-array: a-phandle-array = <&mynode0 1 2>, <&mynode1 3 4>;
+
+
+
+
+

@@ -173,6 +173,8 @@ int recvfrom(int sockfd, void *buf, int len, unsigned int flags, struct sockaddr
 recv(new_fd, inputBuffer, sizeof(inputBuffer), 0);
 send(new_fd, outputBuffer, sizeof(outputBuffer), 0);
 ```
+### read & write
+跟send/recv差不多，不過flag直接是0
 
 ### close & shutdown
 當你使用完一個socket，你就需要把它關掉，這裡可以用close(因為在lunux下什麼都是檔案)或是shutdown。

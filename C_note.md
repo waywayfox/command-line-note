@@ -475,7 +475,7 @@ break file1.c:6 if i >= ARRAYSIZE
 
 ### addr2line
 這是一個可以找出crash的位置的工具，輸入執行檔跟crash的位置，他會幫你找出那個位置到底是在code的哪裏。
-```
+``` shell
 addr2line [-a|--addresses]
           [-b bfdname|--target=bfdname]
           [-C|--demangle[=style]]
@@ -494,13 +494,79 @@ addr2line [-a|--addresses]
 
 CMake是一套可以自動產生makefile的系統，他會根據你所定義的CMakeLists.txt這個檔案所定義的規則建立build system。
 
-常用指令
-cmake\_minimum\_required(VERSION 3.5.1)定義最低需求的版本。
-project(Asuka VERSION1.0) 定義project名稱跟版本，這個定義會被存在PROJECT\_NAME之中。
-add\_library(mylib ${mylib\_sources}) 建立lib。
-add\_executable(myexec ${myexec\_sources}) 建立執行檔。
-target\_link\_libraries(myexec mylib)
-install(DESTINATION、PERMISSIONS、CONFIGURATIONS、COMPONENT) 設定安裝路徑還有一些其他設定。
+任何CMakeLists.txt都要由cmake_minimum_required()開始，裡面要填上最低版本的Cmake
+接下來要有project(Asuka VERSION1.0)來標示project的名稱跟版本。
+
+###常用指令
+cmake_minimum_required(VERSION 3.5.1)定義最低需求的版本。
+project(Asuka VERSION 1.0) 定義project名稱跟版本，這個定義會被存在PROJECT_NAME之中。
+add_subdirectory(directory_name) 加入一個子目錄，執行cmake時他會同時去執行這子目錄的CMakeLists.txt
+
+####全域設定
+set(name value) 用來設定全域變數之類的東西。
+```
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+```
+option(<variable> "<help_text>" ON/OFF)
+option讓你可以簡易設定一些boolean的全域變數，要注意你修改之後可能不會生效，因為他在初始化的階段就會把這東西存在cache中，要用cmake <path> -D<variable>=<value>來修改。
+
+configure_file(input output option)
+  configure_file會處理input並輸出到output，通常會用來處理一下#define之類的。
+  例如，你可以在input這樣定義，並用set定義要改變的值之後，就會把@var@換成對應的值。
+```C
+#cmakedefine FOO_ENABLE
+#cmakedefine FOO_STRING "@FOO_STRING@"
+->
+option(FOO_ENABLE "Enable Foo" ON)
+if(FOO_ENABLE)
+  set(FOO_STRING "foo")
+endif()
+configure_file(foo.h.in foo.h @ONLY)
+->
+#define FOO_ENABLE
+#define FOO_STRING "foo"
+```
+target_compile_definitions 讓你可以設定compile defination
+target_compile_definitions(<target>
+  <INTERFACE|PUBLIC|PRIVATE> [items1...]
+  [<INTERFACE|PUBLIC|PRIVATE> [items2...] ...])
+
+####創建target
+add_executable(<name> <options>... <sources>...) 建立執行檔。
+  options有WIN32,MACOSX_BUNDLE,EXCLUDE_FROM_ALL三種。
+target_link_libraries(<target> ... <item>... ...)
+在編譯target時加入link，item可以是library的名稱，路徑，或是其他會用到的flag等等。
+
+add_library(<name> [<type>] [EXCLUDE_FROM_ALL] <sources>...)
+加入一個library，你可以在type指定他是STATIC/SHARED/MODULE。
+
+#### include相關
+target_include_directories(target path...)
+把目錄加入編譯時include中，target需要先被add_executable或add_library創建。
+install(DESTINATION、PERMISSIONS、CONFIGURATIONS、COMPONENT) 設定安裝路徑還有一些其他設定。Make
+
+### 常用變數
+PROJECT_SOURCE_DIR 是上一次cmake呼叫project()的位置，通常是最外層的目錄。
+CMAKE_SOURCE_DIR，<projectname>_SOURCE_DIR這兩個也跟上面的一樣，通常是最外層的目錄。
+CMAKE_CURRENT_SOURCE_DIR當前的CMakeLists.txt的目錄
+CMAKE_CURRENT_LIST_FILE使用這個變數的完整路徑。
+CMAKE_CURRENT_LIST_LINE使用這個變數的行數
+PROJECT_NAME project的名稱。
+
+
+
+### if
+```
+if(<condition>)
+  <commands>
+elseif(<condition>) # optional block, can be repeated
+  <commands>
+else()              # optional block
+  <commands>
+endif()
+
+```
 
 
 ## errno

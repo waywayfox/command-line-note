@@ -68,6 +68,10 @@ asuka
 -m 755設定創建的directory的權限
 
 
+## mv
+移動檔案，改名
+
+
 ## cat
 
 -n 輸出行號
@@ -592,6 +596,27 @@ ls -l /etc/*-release
 -y 並列顯示不同的部分
 -W 欄寬
 
+
+# tar
+
+c: create
+v: verbose顯示處理的檔案
+f: 指定檔案
+壓縮就會像是這樣
+` tar -cvf mpi.tar mpi/`
+
+x: extract
+解壓縮
+`tar -xvf mpi.tar`
+
+
+當你不需要那麼多檔案，你可以在後面指定要解壓哪些檔案就好，或是指定格式。
+`tar -xvf mpi.tar "mpi/mpi.R" "mpi/pi.c"`
+`tar -xvf mpi.tar --wildcards "*.c"`
+
+r: 把檔案加入壓縮檔內。
+
+
 # ar
 可以將多個檔案合成一個檔案，可以用來製作備份或是合成library。
 也可以對產生的備份檔進行修改刪除等等動作。
@@ -712,7 +737,25 @@ ssh-keygen -t ed25519
 
 ```
 
+# ssh-add
+```
+ssh-add <private key path>
+ssh-add -l/-L  # show all added key
+ssh-add -D #remove all key
+```
 
+
+# TFTP
+
+
+tftp 進入tftp 模式
+```
+tftp> connect <ip>
+tftp> get <file>
+tftp> put <file>
+tftp> binary //接下來使用binary模式傳輸檔案
+
+```
 
 # 其他筆記
 linux samba路徑
