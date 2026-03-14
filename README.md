@@ -599,6 +599,9 @@ git config --global alias.unstage 'reset HEAD --'
 git config --global alias.kaifuku 'checkout HEAD --'
 git config --global alias.last 'log -1 HEAD'
 git config --global alias.glog 'log --all --decorate --oneline --graph'
+git config --global alias.lsfile 'diff-tree --no-commit-id --name-status -r'
+
+
 ```
 
 `git config --global unset alias.trololo`
